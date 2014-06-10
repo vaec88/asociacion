@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_operation">
+    <%= form_tag destroy_operation_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar '#{@operacion.oper_nombre}'"%>
+      <%= hidden_field_tag :id, @operacion.id  %>
+    <%end%>
+  </div>
+</div>

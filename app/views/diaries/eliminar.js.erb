@@ -1,0 +1,18 @@
+$('#diary_delete').html('<%= escape_javascript(render :partial =>'diaries/eliminar')%>');
+$('#diary_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_eliminar_diary form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#diary_delete").dialog("close");
+                }
+            }
+});

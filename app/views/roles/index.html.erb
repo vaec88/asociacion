@@ -1,0 +1,34 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Nombre de Rol</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @roles.each do |f| %>
+      <tr>
+        <td><%= label_tag nil, f.rol_nombre %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => f.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>f.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+    <%= form_for @role, :remote=>true do |f|%>
+      <tr>
+        <td><%= f.text_field :rol_nombre, :id=>"roles_index_rol_nombre", :autofocus => true %></td>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="role_new">
+
+</div>
+<div id="role_edit">
+
+</div>
+<div id="role_delete">
+
+</div>
+<div id="role_no_delete">
+
+</div>
+<%#= link_to 'Agregar nuevo rol', new_role_path %>

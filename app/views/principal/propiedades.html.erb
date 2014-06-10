@@ -1,0 +1,18 @@
+<html>
+  <% if current_user %>
+    <head>
+        <title>Propiedades</title>
+    </head>
+  <body>
+      <h1>Propiedades</h1>
+      <p> Estas son las propiedades.</p>
+      <%else%>
+      <script type="text/javascript">
+    window.location.href="falla_sesion"  // put your correct path in a string here
+  </script>
+    <%# redirect_to :controller=> 'principal', :action=>'falla_sesion' %>
+      <!--<p> Para ver este contenido debe iniciar sesion.</p>-->
+  <%end%>
+  </body>
+  
+</html>

@@ -1,0 +1,19 @@
+$('#usuario_reporte_meetings').html('<%= escape_javascript(render :partial =>'meetings/reporte_meeting_formulario')%>');
+$('#usuario_reporte_meetings').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Reporte de Citas",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_reporte_meeting form").submit();
+                    $("#usuario_reporte_meetings").dialog("close");
+                },
+                "Cancelar" : function()
+                {
+                    $("#usuario_reporte_meetings").dialog("close");
+                }
+            }
+});

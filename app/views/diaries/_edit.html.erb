@@ -1,0 +1,44 @@
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    /*CAMPOS DE SOLO NUMEROS*/
+    $("#diaries_edit_age_hora").keypress(isNumberKey);
+    //PARA INGRESAR LA FECHA POR MEDIO DE CALENDARIO
+    $(function (){
+      $('#diary_edit_age_fecha').datepicker({
+      dateFormat : "yy-mm-dd"});
+    });
+  });
+</script>
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_diary">
+  <%= form_for @actividad,:remote=>true do |a|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Actividad: " %></td>
+          <td><%= a.text_area :age_actividad, :id=>"diaries_edit_age_actividad", :autofocus => true,:class=>"textarea" %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Fecha: " %></td>
+          <td class="label_edit"><%= a.text_field :age_fecha, :id => "diary_edit_age_fecha", :readonly=>true, :class=>"textarea"  %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Hora: " %></td>
+          <td class="label_edit"><%= a.text_field :age_hora, :value => @actividad.age_hora.strftime('%H:%M:%S'), :id=>"diaries_edit_age_hora", :class=>"textarea"  %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Direccion: " %></td>
+          <td class="label_edit"><%= a.text_field :age_direccion, :id=>"diaries_edit_age_direccion", :class=>"textarea"  %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= a.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

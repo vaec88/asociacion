@@ -1,0 +1,10 @@
+<%= form_for @canton do |c|%>
+  <p>
+    <%= c.label :"Nombre de Canton" %>
+    <%= c.text_field :cant_nombre %>
+    <%= c.hidden_field :province_id, value: @id %>
+  </p>
+  <p>
+    <%= c.submit "Guardar"%>
+  </p>
+<%end%>

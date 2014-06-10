@@ -1,0 +1,23 @@
+$('#price_new').html('<%= escape_javascript(render :partial =>'prices/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@tabla_avaluo.aval_descrip}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#price_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#price_new").dialog("close");
+                    document.getElementById("prices_index_aval_descrip").focus();
+                    $('#prices_index_aval_descrip').val("");
+                }
+            }
+});

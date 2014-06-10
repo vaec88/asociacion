@@ -1,0 +1,34 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <%#= @estado_pago %>
+      <%#= @estado_mes %>
+      <%#= @estado_anio %>
+      <div id="imagen_cabecera">
+        <!--<img width="689" height="177"<%#= image_tag "reportes/encabezado.JPG" %></img>-->
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Usuarios con <%= @estado_pago %> de <%= @estado_mes %> - <%= @estado_anio %></h1>
+
+    <%if @personas.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Cedula</p></div></th>
+          <th><div class="titulos"><p>Apellidos</p></div></th>
+          <th><div class="titulos"><p>Nombres</p></div></th>
+          <th><div class="titulos"><p>Email</p></div></th>
+        </tr>
+        <%@personas.each do |p|%>
+          <tr><td><%= label_tag nil, p.pers_cedula %></td><td><%= label_tag nil, p.pers_apellido %></td><td><%= label_tag nil, p.pers_nombre %></td><td><%= label_tag nil, p.pers_email %></td></tr>
+        <%end%>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>
+<!--<input type="button" onclick="window.print()" value="Print" />-->

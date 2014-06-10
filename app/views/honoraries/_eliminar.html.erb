@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_honorary">
+    <%= form_tag destroy_honorary_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar el abono de '#{@honorario.hon_cantidad}'"%>
+      <%= hidden_field_tag :id, @honorario.id  %>
+    <%end%>
+  </div>
+</div>

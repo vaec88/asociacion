@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_province">
+  <%= form_tag destroy_province_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@provincia.prov_nombre}'"%>
+    <%= hidden_field_tag :id, @provincia.id  %>
+  <%end%>
+  </div>
+</div>

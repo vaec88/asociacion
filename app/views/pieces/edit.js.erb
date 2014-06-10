@@ -1,0 +1,19 @@
+//alert('hola mundo');
+$('#piece_edit').html('<%= escape_javascript(render :partial =>'pieces/edit')%>');
+$('#piece_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_piece form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#piece_edit").dialog("close");
+                }
+            }
+});

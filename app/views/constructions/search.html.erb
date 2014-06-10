@@ -1,0 +1,182 @@
+<%= stylesheet_link_tag "tablas_contructions.css"%>
+<%= stylesheet_link_tag 'gmaps4rails'%>
+<%= stylesheet_link_tag 'paginacion'%>
+<%= stylesheet_link_tag 'mini_menu'%>
+<%= javascript_include_tag "busqueda.js"%>
+<%#if @search.exists?%>
+
+<script>
+      $(document).ready(function() {
+      $('#province_select').change(function() {
+        $.ajax({
+        url: "<%= update_cantons_path %>",
+        data: {
+          province_id : $('#province_select').val()
+        },
+        dataType: "script"
+        });
+      });
+      $('#canton_select').change(function() {
+        $.ajax({
+        url: "<%= update_parishes_path %>",
+        data: {
+          canton_id : $('#canton_select').val()
+        },
+        dataType: "script"
+        });
+      });
+    });
+    </script>
+
+<a href="#" id="busqueda_avanzada"><p><img alt=""<%= image_tag "contenido/buscar_16.png" %></img> BUSQUEDA DE INMUEBLES</p></a>
+<div id="busqueda_form">
+  <fieldset>
+    <legend>Formulario de Busqueda</legend>
+    <br/>
+<%= form_tag search_construction_path, :method => 'get' do %>
+  <div id="general_busqueda_form">
+  <table>
+    <tr>
+      <td><%= label_tag "Operacion: " %></td><td><%= select_tag :operation_id_search, options_from_collection_for_select(@operacion, "id", "oper_nombre", nil), :prompt => "Seleccione una Operacion", :style => "width:206px", :id => 'operation_select_search'%></td>
+    </tr>
+    <tr>
+      <td><%= label_tag "Propiedad: " %></td><td><%= select_tag :property_id_search, options_from_collection_for_select(@propiedad, "id", "propd_nombre", nil), :prompt => "Seleccione un Tipo", :style => "width:206px", :id => 'property_select_search'%></td>
+    </tr>
+    <tr>
+      <td><%= label_tag "Provincia: " %></td><td><%= select_tag :province_id_search, options_from_collection_for_select(@provincia, "id", "prov_nombre", nil), :prompt => "Seleccione una Provincia", :style => "width:206px", :id => 'province_select'%></td>
+    </tr>
+    <tr>
+      <td><%= label_tag "Canton: " %></td><td><%= select_tag :canton_id_search, options_from_collection_for_select(@canton, "id", "cant_nombre", nil), :prompt => "Seleccione un Canton", :style => "width:206px", :id => 'canton_select'%></td>
+    </tr>
+    <tr>
+      <td><%= label_tag "Inversion: " %></td><td><%= text_field_tag :precio_inmueble_1, nil, :class => "text_prec_inm_1", :id => "text_prec_inm_1", :style => "width:85px" %> - <%= text_field_tag :precio_inmueble_2, nil, :class => "text_prec_inm_2", :id => "text_prec_inm_2", :style => "width:85px" %></td>
+    </tr>
+  </table>
+  </div>
+
+  <div id="partes_busqueda_form">
+  <table>
+    <% @partes.in_groups_of(3, false).each do |pg| %>
+      <tr>
+        <% pg.each do |p|%>
+          <td width="120px"><%= label_tag p.part_nombre%></td><td><%= text_field_tag "piece_id_search_" + "#{p.id}", nil, :class => "piece_id" + "#{p.id}", :id => "piece_id" + "#{p.id}", :style => "width:25px" %></td>
+          <%= hidden_field_tag "piece_ids[]", p.id %>
+        <%end%>
+      </tr>
+    <%end%>
+  </table>
+  </div>
+
+  <div id="boton_busqueda_form"><%= submit_tag "Buscar" %></div>
+  
+<%end%>
+<br/>
+</fieldset>
+</div>
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+<%if @search.count >= 1 %>
+
+<div id="inm_tabla">
+<% @search.in_groups_of(4, false).each do |ig| %>
+    <table class="bordered">
+      <tr>
+        <% ig.each do |i|%>
+        <td width="230px">
+          <div id="img_tabla">
+            <!--<img alt="" width="270" height="200" <%#= image_tag "constructions/dep1.jpg" %></img>-->
+            <% if i.images.exists?%>
+              <%= link_to (image_tag i.images.each.first.img_path.url(:thumb), :width => 200, :height => 200), index_images_path(:construction_id => i.id)%>
+              <%=  %><br/>
+            <%else%>
+              <%if current_user == nil%>
+                <img alt="" width="200" height="200" <%= image_tag "constructions/no_image_construction.png" %></img><br/>
+              <%else%>
+                <a href="<%=index_images_path(:construction_id => i.id)%>"><img alt="" width="200" height="200" <%= image_tag "constructions/no_image_construction.png" %></img></a><br/>
+              <%end%>
+            <%end%>
+            <%= i.parish.canton.province.prov_nombre + " - " + i.parish.canton.cant_nombre%>
+          </div>
+
+          <div id="text_tabla">
+            <%= i.operation.oper_nombre + " de " + i.property.propd_nombre + " ubicado en el sector " + i.inm_ciudadela%><br/><br/>
+
+            <!--Ciudadela: <%#= i.inm_ciudadela %><br/>
+            Calle: <%#= i.inm_calle %><br/>
+            Latitud: <%#= i.latitude %><br/>
+            Longitud: <%#= i.longitude %><br/>
+            Conjunto: <%#= i.inm_conjunto %><br/>
+            Tipo: <%#= i.property.propd_nombre %><br/>-->
+            <%if current_user.nil? or Persona.joins(:constructions).where(:personas_constructions_roles => {:construction_id => i.id, :role_id => @rol_demandante.id}).exists?%>
+              Operacion: <%= i.operation.oper_nombre %><br/>
+            <%else%>
+              <%= link_to "Operacion: " + i.operation.oper_nombre, new_person_path(:construction_id => i.id) %><br/>
+            <%end%>
+
+          Inversion: $ <%= i.inm_val_merc %><br/><br/>
+          
+          <%if current_user.nil? == false%>
+            <section class="container">
+            <div class="dropdown">
+              <a href="#">Configurar</a>
+              <div>
+                <ul>
+                  <li><a <%= link_to "Avaluo", new_avaluo_path(:construction_id => i.id) %></a></li>
+                  <li><a <%= link_to "Citas", index_meeting_path(:construction_id => i.id)%></a></li>
+                  <li><a <%= link_to "Honorarios", index_honorary_path(:construction_id => i.id)%></a></li>
+                  <li><a <%= link_to "Editar", :action => "edit", :id => i.id %></a></li>
+                  <!--<li><a <%#= link_to "Eliminar", {:action=>"eliminar", :id=>i.id}, :remote=>true %></a></li>-->
+                  <li><a <%= link_to "Eliminar", i, :method => "delete", :confirm => "¿Esta seguro?"%></a></li>
+                  <li><a <%= link_to "Ver mas...", i%></a></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+            <%#= link_to "Avaluo", new_avaluo_path(:construction_id => i.id) %>
+            <%#= link_to "Demandante", index_images_path(:construction_id => i.id)%>
+            <%#= link_to "Citas", index_meeting_path(:construction_id => i.id)%>
+            <%#= link_to "Editar", :action => "edit", :id => i.id %>
+            <%#= link_to "Eliminar", i, :method => "delete", :confirm => "¿Esta seguro?"%>
+
+          
+          <%else%>
+            <%= link_to "Ver mas...", i%>
+          <%end%>
+          </div>
+        </td>
+        <%end%>
+      </tr>
+    </table>
+<% end %>
+</div>
+<br/>
+
+<div class="digg_pagination">
+  <%= will_paginate @search %>
+</div>
+
+<br/>
+
+<%#= gmaps4rails(@json) %>
+<%= gmaps("map_options" => { :raw => "{scrollwheel: false}"},"markers" => { "data" => @json }) %>
+<%else%>
+  <%= "Lo sentimos, no se encontraron resultados para tu busqueda" %>
+<%end%>
+
+
+
+<% @piece_ids_current.each do |pic| %>
+  <%= pic %>
+<%end%>

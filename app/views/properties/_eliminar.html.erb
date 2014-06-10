@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_property">
+    <%= form_tag destroy_property_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar '#{@propiedad.propd_nombre}'"%>
+      <%= hidden_field_tag :id, @propiedad.id  %>
+    <%end%>
+  </div>
+</div>

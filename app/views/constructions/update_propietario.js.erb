@@ -1,0 +1,29 @@
+//alert("Esta en la ruta");
+<%if @existe == "yes"%>
+  $('#pers_propiet_apellidos').val("<%= @propietario.pers_apellido%>");
+  $('#pers_propiet_nombres').val("<%= @propietario.pers_nombre%>");
+  $('#pers_propiet_direccion').val("<%= @propietario.pers_direccion%>");
+  $('#pers_propiet_telefono1').val("<%= @propietario.pers_telefono1%>");
+  $('#pers_propiet_telefono2').val("<%= @propietario.pers_telefono2%>");
+  $('#pers_propiet_email').val("<%= @propietario.pers_email%>");
+  /*document.getElementById("pers_propiet_apellidos").readOnly=true;
+  document.getElementById("pers_propiet_nombres").readOnly=true;
+  document.getElementById("pers_propiet_direccion").readOnly=true;
+  document.getElementById("pers_propiet_telefono1").readOnly=true;
+  document.getElementById("pers_propiet_telefono2").readOnly=true;
+  document.getElementById("pers_propiet_email").readOnly=true;*/
+<%else%>
+  $('#pers_propiet_apellidos').val("");
+  $('#pers_propiet_nombres').val("");
+  $('#pers_propiet_direccion').val("");
+  $('#pers_propiet_telefono1').val("");
+  $('#pers_propiet_telefono2').val("");
+  $('#pers_propiet_email').val("");
+  /*document.getElementById("pers_propiet_apellidos").readOnly=false;
+  document.getElementById("pers_propiet_nombres").readOnly=false;
+  document.getElementById("pers_propiet_direccion").readOnly=false;
+  document.getElementById("pers_propiet_telefono1").readOnly=false;
+  document.getElementById("pers_propiet_telefono2").readOnly=false;
+  document.getElementById("pers_propiet_email").readOnly=false;*/
+<%end%>
+$('#pers_propiet_existe').val("<%= @existe%>");

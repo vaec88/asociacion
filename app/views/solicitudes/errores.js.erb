@@ -1,0 +1,39 @@
+$('#construction_contacto_errores').html('<%= escape_javascript(render :partial =>'solicitudes/errores')%>');
+if ('<%= @error_nombre%>' != "")
+{ $('#contact_error_nombre').html('<%= escape_javascript("#{@error_nombre}")%>');
+  $('#contact_error_nombre').show();
+}
+
+if ('<%= @error_apellido%>' != "")
+{ $('#contact_error_apellido').html('<%= escape_javascript("#{@error_apellido}")%>');
+  $('#contact_error_apellido').show();
+}
+
+if ('<%= @error_email%>' != "")
+{ $('#contact_error_email').html('<%= escape_javascript("#{@error_email}")%>');
+  $('#contact_error_email').show();
+}
+
+if ('<%= @error_msg%>' != "")
+{ $('#contact_error_msg').html('<%= escape_javascript("#{@error_msg}")%>');
+  $('#contact_error_msg').show();
+}
+
+document.getElementById("contact_error_nombre").style.color="#F50E0E";
+document.getElementById("contact_error_apellido").style.color="#F50E0E";
+document.getElementById("contact_error_email").style.color="#F50E0E";
+document.getElementById("contact_error_msg").style.color="#F50E0E";
+
+$('#construction_contacto_errores').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Errores",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#construction_contacto_errores").dialog("close");
+                }
+            }
+});

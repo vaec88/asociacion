@@ -1,0 +1,28 @@
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    //PARA INGRESAR LA FECHA POR MEDIO DE CALENDARIO
+    $(function (){
+      $('#solicitude_fecha_desde').datepicker({
+        dateFormat : "yy-mm-dd"});
+      $('#solicitude_fecha_hasta').datepicker({
+        dateFormat : "yy-mm-dd"});
+    });
+  });
+</script>
+<div id="formulario">
+  <div id="form_reporte_solicitude">
+    <%#= form_tag reporte_amount_path, :target=>"DoSubmit", :onsubmit=>"DoSubmit = window.open('about:blank','DoSubmit','width=400,height=350,resizeable=no,scrollbars');"  do%>
+    <%= form_tag reporte_solicitude_path, :target=>"_blank"  do%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Desde: "%></td>
+          <td class="label_edit"><%= text_field_tag :solicitude_fecha_desde, nil, :id=>"solicitude_fecha_desde", :style=>"width:150px", :readonly=>true, :autofocus=>true %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Hasta: "%></td>
+          <td class="label_edit"><%= text_field_tag :solicitude_fecha_hasta, nil, :id=>"solicitude_fecha_hasta", :style=>"width:150px", :readonly=>true %></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>
+</div>

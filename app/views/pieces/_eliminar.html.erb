@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_piece">
+  <%= form_tag destroy_piece_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@parte.part_nombre}'"%>
+    <%= hidden_field_tag :id, @parte.id  %>
+  <%end%>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<%= form_for @cuota do |c|%>
+  <p>
+    <%= c.label "Valor de Cuota: " %>
+    <%= c.text_field :amo_cantidad %>
+  </p>
+  <p>
+    <%= c.label "Mes: " %>
+    <%#= c.text_field :amo_mes %>
+    <%= c.select :amo_mes, options_for_select([["Enero","1"],["Febrero","2"],["Marzo","3"],["Abril","4"],["Mayo","5"],["Junio","6"],["Julio","7"],["Agosto","8"],["Septiembre","9"],["Octubre","10"],["Noviembre","11"],["Diciembre","12"]]), { :include_blank => false }, {:style => "width:100px"} %>
+  </p>
+  <p>
+    <%= c.label "Año: " %>
+    <%#= c.text_field :amo_anio %>
+    <%= c.select :amo_anio, options_for_select([["2013"],["2014"]]), { :include_blank => false }, {:style => "width:100px"} %>
+  </p>
+  <p>
+    <%= c.label "Fecha de Pago: " %>
+    <%= c.text_field :amo_fecha %>
+  </p>
+  <%= hidden_field_tag :usuario_id, @usuario.id %>
+  <p>
+    <%= c.submit "Guardar"%>
+  </p>
+<%end%>

@@ -1,0 +1,23 @@
+<%if @existe == "yes" and @misma_persona == "no"%>
+  $('#pers_demand_apellidos').val("<%= @demandante.pers_apellido%>");
+  $('#pers_demand_nombres').val("<%= @demandante.pers_nombre%>");
+  $('#pers_demand_direccion').val("<%= @demandante.pers_direccion%>");
+  $('#pers_demand_telefono1').val("<%= @demandante.pers_telefono1%>");
+  $('#pers_demand_telefono2').val("<%= @demandante.pers_telefono2%>");
+  $('#pers_demand_email').val("<%= @demandante.pers_email%>");
+<%else%>
+  <%if @misma_persona == "yes"%>
+    $('#pers_demand_cedula').val("");
+    $('#pers_demand_cedula').focus();
+    alert("El demandante deber ser diferente al propietario");
+  <%end%>
+  $('#pers_demand_apellidos').val("");
+  $('#pers_demand_nombres').val("");
+  $('#pers_demand_direccion').val("");
+  $('#pers_demand_telefono1').val("");
+  $('#pers_demand_telefono2').val("");
+  $('#pers_demand_email').val("");
+
+<%end%>
+$('#pers_demand_existe').val("<%= @existe%>");
+//alert("<%#= @propietario.pers_cedula %>");

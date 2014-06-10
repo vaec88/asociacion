@@ -1,0 +1,21 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_property">
+    <%= form_for @propiedad, :remote=>true do |p|%>
+        <table>
+          <tr>
+            <td><%= label_tag nil, "Tipo de Propiedad:" %></td>
+            <td><%= p.text_field :propd_nombre, :id=>"properties_edit_propd_nombre", :autofocus => true %></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+          </tr>
+          <!--<tr>
+            <td colspan="2" class="boton"><%#= p.submit "Guardar"%></td>
+          </tr>-->
+        </table>
+    <%end%>
+  </div>
+</div>

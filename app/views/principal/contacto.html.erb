@@ -1,0 +1,10 @@
+<%= stylesheet_link_tag "avaluos.css", :media => "screen" %>
+<fieldset id="form_contacto">
+  <legend class="avaluo">Formulario de Contacto</legend>
+  <div id="dc_form_contacto">
+    <%= text_field_tag :contacto_nombres, nil, placeholder: 'Nombres'%><br/>
+    <%= text_field_tag :contacto_apellidos, nil, placeholder: 'Apellidos'%><br/>
+    <%= text_field_tag :contacto_email, nil, placeholder: 'E-mail'%><br/>
+    <%= text_area_tag :contacto_mensaje, nil, placeholder: 'Mensaje'%><br/>
+  </div>
+</fieldset>

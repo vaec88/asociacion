@@ -1,0 +1,14 @@
+$('#rebate_no_delete').html('<%= escape_javascript(render :partial =>'rebates/no_eliminar')%>');
+$('#rebate_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#rebate_no_delete").dialog("close");
+                }
+            }
+});

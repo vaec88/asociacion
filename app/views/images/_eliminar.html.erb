@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_image">
+    <%= form_tag destroy_image_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar esta imagen"%>
+      <%= hidden_field_tag :id, @imagen.id  %>
+    <%end%>
+  </div>
+</div>

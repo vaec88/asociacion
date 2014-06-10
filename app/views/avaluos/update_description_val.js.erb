@@ -1,0 +1,13 @@
+$('#text_param_val_unit_'+<%= @parameter_id %>).val("<%= @descrip%>");
+var selects_descriptions = document.getElementsByClassName("description_select");
+var param_val_unit_text = document.getElementsByClassName("text_param_val_unit");
+var valor_sum_descrip = 0;
+for (var i = 0; i < selects_descriptions.length; i++){
+  valor_sum_descrip = valor_sum_descrip + parseFloat(param_val_unit_text[i].value) ;
+}
+$("#text_sum_descrip").val(valor_sum_descrip);
+    var val_real = $("#text_val_real").val();
+var sum_descrip = $("#text_sum_descrip").val();
+var sum_state = $("#text_sum_state").val();
+var sum_val_merc = parseFloat(val_real)+parseFloat(sum_descrip)+parseFloat(sum_state);
+$("#text_val_merc").val(parseFloat(sum_val_merc));

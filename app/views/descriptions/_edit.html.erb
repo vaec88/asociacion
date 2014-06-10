@@ -1,0 +1,41 @@
+<%#= javascript_include_tag "validaciones_descripts_new.js"%>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#descriptions_edit_param_val_unit").keypress(isNumberKey);
+    });
+  </script>
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_description">
+    <%= form_for @param_val, :remote=>true do |pv|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Descripcion de Parametro:" %></td>
+          <td><%= pv.text_field :param_val_descrip, :id=>"descriptions_edit_param_val_descrip", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Valor de parametro:" %></td>
+          <td><%= pv.text_field :param_val_unit, :id=>"descriptions_edit_param_val_unit" %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+    <%#= hidden_field_tag :persona_id=>@persona.id %>
+    <%end%>
+  </div>
+</div>
+<!--<tr>
+<td colspan="2" class="boton"><%#= pv.submit "Guardar"%></td>
+</tr>-->
+<%#= @inmuebles_count%>
+<%# @inm_avaluo_update.each do |i| %>
+  <%#= i.inm_calle %>
+  <%#= i.id %>
+<%#end%>
+<%# @ids_inm.each do |i| %>
+  <%#= i %>
+<%#end%>

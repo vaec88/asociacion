@@ -1,0 +1,112 @@
+$('#new_edit_error').html('<%= escape_javascript(render :partial =>'users/new_edit_error')%>');
+if ('<%= @error_username%>' == "")
+{ $('#usuarios_new_usu_username').hide();}
+else
+{ $('#usuarios_new_usu_username').show();
+  $('#usuarios_new_usu_username').html('<%= escape_javascript(@error_username)%>');
+}
+
+if ('<%= @error_password%>' == "")
+{ $('#usuarios_new_usu_password').hide();}
+else
+{ $('#usuarios_new_usu_password').show();
+  $('#usuarios_new_usu_password').html('<%= escape_javascript(@error_password)%>');
+}
+
+if ('<%= @error_password_confirm%>' == "")
+{ $('#usuarios_new_usu_password_confirm').hide();}
+else
+{ $('#usuarios_new_usu_password_confirm').show();
+  $('#usuarios_new_usu_password_confirm').html('<%= escape_javascript(@error_password_confirm)%>');
+}
+
+if ('<%= @error_matricula%>' == "")
+{ $('#usuarios_new_usu_matr_prof').hide();}
+else
+{ $('#usuarios_new_usu_matr_prof').show();
+  $('#usuarios_new_usu_matr_prof').html('<%= escape_javascript(@error_matricula)%>');
+}
+
+if ('<%= @error_cedula%>' == "")
+{ $('#usuarios_new_pers_cedula').hide();}
+else
+{ $('#usuarios_new_pers_cedula').show();
+  $('#usuarios_new_pers_cedula').html('<%= escape_javascript(@error_cedula)%>');
+}
+
+if ('<%= @error_apellido%>' == "")
+{ $('#usuarios_new_pers_apellido').hide();}
+else
+{ $('#usuarios_new_pers_apellido').show();
+  $('#usuarios_new_pers_apellido').html('<%= escape_javascript(@error_apellido)%>');
+}
+
+if ('<%= @error_nombre%>' == "")
+{ $('#usuarios_new_pers_nombre').hide();}
+else
+{ $('#usuarios_new_pers_nombre').show();
+  $('#usuarios_new_pers_nombre').html('<%= escape_javascript(@error_nombre)%>');
+}
+
+if ('<%= @error_direccion%>' == "")
+{ $('#usuarios_new_pers_direccion').hide();}
+else
+{ $('#usuarios_new_pers_direccion').show();
+  $('#usuarios_new_pers_direccion').html('<%= escape_javascript(@error_direccion)%>');
+}
+
+if ('<%= @error_telefono2%>' == "")
+{ $('#usuarios_new_pers_telefono2').hide();}
+else
+{ $('#usuarios_new_pers_telefono2').show();
+  $('#usuarios_new_pers_telefono2').html('<%= escape_javascript(@error_telefono2)%>');
+}
+
+if ('<%= @error_email%>' == "")
+{ $('#usuarios_new_pers_email').hide();}
+else
+{ $('#usuarios_new_pers_email').show();
+  $('#usuarios_new_pers_email').html('<%= escape_javascript(@error_email)%>');
+}
+
+/*$('#usuarios_new_usu_password_confirm').show();
+$('#usuarios_new_usu_password_confirm').html('<%#= escape_javascript(@error_password_confirmation)%>');*/
+
+document.getElementById("check_usu_username").focus();
+
+function trim(matricula, pagina_web, apellido, nombre, direccion)
+{
+var matr = matricula.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var pag_web = pagina_web.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var apell = apellido.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var nomb = nombre.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var direc = direccion.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#check_usu_matr_prof").val(matr);
+$("#check_usu_pag_web").val(pag_web);
+$("#check_pers_apellido").val(apell);
+$("#check_pers_nombre").val(nomb);
+$("#check_pers_direccion").val(direc);
+//alert(retorno);
+}
+
+var matricula = document.getElementById("check_usu_matr_prof").value
+var pagina_web = document.getElementById("check_usu_pag_web").value
+var apellido = document.getElementById("check_pers_apellido").value
+var nombre = document.getElementById("check_pers_nombre").value
+var direccion = document.getElementById("check_pers_direccion").value
+trim(matricula, pagina_web, apellido, nombre, direccion);
+
+document.getElementById("msg_error_new_edit").style.color="#F50E0E";
+$('#new_edit_error').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Error",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#new_edit_error").dialog("close");
+                }
+            }
+});

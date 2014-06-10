@@ -1,0 +1,48 @@
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    /*CAMPOS DE SOLO NUMEROS*/
+    $("#amounts_edit_amo_cantidad").keypress(isNumberKey);
+    //PARA INGRESAR LA FECHA POR MEDIO DE CALENDARIO
+    $(function (){
+      $('#amounts_edit_amo_fecha').datepicker({
+        dateFormat : "yy-mm-dd"});
+    });
+  });
+</script>
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_amount">
+  <%= form_for @cuota, :remote=>true do |c|%>
+    <%= hidden_field_tag :usuario_id, @usuario.id %>
+    <%= hidden_field_tag :persona_id, @persona.id %>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Valor de Cuota: "%></td>
+          <td class="label_edit"><%= c.text_field :amo_cantidad, :id=>"amounts_edit_amo_cantidad" ,:style=>"width:50px", :autofocus=>true %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Mes: "%></td>
+          <td class="select_edit"><%= c.select :amo_mes, options_for_select([["Enero","1"],["Febrero","2"],["Marzo","3"],["Abril","4"],["Mayo","5"],["Junio","6"],["Julio","7"],["Agosto","8"],["Septiembre","9"],["Octubre","10"],["Noviembre","11"],["Diciembre","12"]], @cuota.amo_mes), { :include_blank => false }, {:style => "width:100px", :id=>"amounts_edit_amo_mes"} %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Año: "%></td>
+          <td class="select_edit"><%= c.select :amo_anio, options_for_select([["2013"],["2014"]], @cuota.amo_anio), { :include_blank => false }, {:style => "width:100px", :id=>"amounts_edit_amo_anio"} %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Fecha de Pago: "%></td>
+          <td class="label_edit"><%= c.text_field :amo_fecha, :id=>"amounts_edit_amo_fecha", :value => (@cuota.amo_fecha.strftime('%Y-%m-%d')), :readonly=>true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= c.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>
+<%#= @persona.id %>
+<%#= @usuario.id %>

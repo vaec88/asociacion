@@ -1,0 +1,31 @@
+<head>
+  <%#= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css"%>
+  <%= stylesheet_link_tag "diaries_calendar.css", :media => "screen" %>
+  <%#= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css"%>
+  <%#= stylesheet_link_tag "jquery-ui.css"%>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/application.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+</head>
+
+
+
+<div id="calendar">
+  <h2 id="month">
+    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-01"), :usuario_id => @usuario.id %>
+    <%#= h @date.strftime("%B %Y") %>
+    <%= h @month + @date.strftime(" %Y")%>
+    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-01"), :usuario_id => @usuario.id  %>
+  </h2>
+  <%= calendar_for(@actividades, :year => @date.year, :month => @date.month) do |calendar| %>
+    <%= calendar.head('Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado')%>
+    <% calendar.day(:day_method => :age_fecha) do |date, diaries| %>
+      <%= date.day %><div id="diary_add"><%= link_to (image_tag("contenido/add2-16.png")), new_diary_path(:usuario_id => @usuario.id, :fecha_actual=>date) %></div>
+        <ul>
+          <% for diary in diaries %>
+          <!--<li><%#= image_tag ("contenido/document_16.png") %><%#= link_to h(diary.age_actividad), diary %></li>-->
+          <li><%= image_tag ("contenido/document_16.png") %><%= diary.age_actividad %></li>
+          <% end %>
+        </ul>
+    <% end %>
+  <% end %>
+</div>

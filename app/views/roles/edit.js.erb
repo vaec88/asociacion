@@ -1,0 +1,18 @@
+$('#role_edit').html('<%= escape_javascript(render :partial =>'roles/edit')%>');
+$('#role_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_role form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#role_edit").dialog("close");
+                }
+            }
+});

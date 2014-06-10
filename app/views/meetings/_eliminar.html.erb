@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_meeting">
+    <%= form_tag destroy_meeting_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar esta información"%>
+      <%= hidden_field_tag :id, @reunion.id  %>
+    <%end%>
+  </div>
+</div>

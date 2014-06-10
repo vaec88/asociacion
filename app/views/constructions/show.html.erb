@@ -1,0 +1,289 @@
+<%= stylesheet_link_tag "avaluos.css", :media => "screen" %>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "colorbox.css", :media => "screen" %>
+<%= javascript_include_tag "jquery.colorbox.js"%>
+<%= javascript_include_tag "validaciones_constructions_show.js.erb"%>
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<script>
+  $(document).ready(function(){
+  //Examples of how to assign the Colorbox event to elements
+  $(".group1").colorbox({rel:'group1'});
+  $(".group2").colorbox({rel:'group2', transition:"fade"});
+  $(".group3").colorbox({rel:'group3', transition:"none", width:"75%", height:"75%"});
+  $(".group4").colorbox({rel:'group4', slideshow:true});
+  $(".ajax").colorbox();
+  $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
+  $(".vimeo").colorbox({iframe:true, innerWidth:500, innerHeight:409});
+  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+  $(".inline").colorbox({inline:true, width:"50%"});
+  $(".callbacks").colorbox({
+    onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+    onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+    onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+    onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+    onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+  });
+
+  $('.non-retina').colorbox({rel:'group5', transition:'none'})
+  $('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+
+  //Example of preserving a JavaScript event for inline calls.
+  $("#click").click(function(){
+    $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+    return false;
+    });
+
+  $("#check_const_contac_nom").keypress(isLetterKey);
+  $("#check_const_contac_ape").keypress(isLetterKey);
+  $("#check_const_contac_email").keypress(isBlankKey);
+  checkMsg();
+  });
+</script>
+<br/>
+<fieldset id="datos_inmueble">
+  <legend class="avaluo">Datos del Inmueble</legend>
+  <div id="mostrar_imagen">
+    <% if @inmueble.images.exists?%>
+      <a class="group2"<%= link_to (image_tag @inmueble.images.first.img_path.url(:thumb), :width => 200, :height => 200),(asset_path @inmueble.images.first.img_path.url(:original))%></a>
+      <div id="ocultar">
+        <%= render "images/galeria" %>
+      </div>
+      <br/>
+      <%= label_tag nil, "Click para ver galería", :class=>"pie_imagen" %>
+    <%else%>
+      <img alt="" width="200" height="200" <%= image_tag "constructions/no_image_construction.png" %></img>
+    <%end%>
+  </div>
+  
+  <div id="mostrar_texto">
+  <table class="bordered">
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Valor Mercado: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.inm_val_merc %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Ciudadela: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.inm_ciudadela %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Calle: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.inm_calle %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Conjunto: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.inm_conjunto %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Nº Vivienda: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.inm_vivienda %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Tipo de inmueble: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.property.propd_nombre %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Operacion: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.operation.oper_nombre %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Provincia: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.parish.canton.province.prov_nombre %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Canton: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.parish.canton.cant_nombre %></div></td>
+    </tr>
+    <tr>
+      <td class="negrita"><div class="etiquetas_left"><%= label_tag nil, "Parroquia: "%></div></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, @inmueble.parish.parr_nombre %></div></td>
+    </tr>
+  </table>
+  </div>
+  <br/>
+  <div class="titulos"><p>CARACTERISTICAS</p></div>
+  <br/>
+  <table class="bordered">
+  <%@inmueble.constructions_pieces.each do |icp|%>
+    <tr><td><div class="etiquetas_left"><%= label_tag nil, icp.det_numero.to_s + " " + icp.piece.part_nombre + " " + icp.det_descrip%></div></td></tr>
+  <%end%>
+  </table>
+  <br/>
+</fieldset>
+
+<%#if @inmueble.constructions_prices.exists? and current_user.nil? == false %>
+<%if @inmueble.constructions_prices.exists? and current_user.nil? == false%>
+<br/>
+<fieldset id="detalle_avaluo">
+  <legend class="avaluo">Detalle del Avaluo</legend>
+  <div class="titulos"><p>TABLA</p></div>
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Descripcion</p></div></th>
+      <th><div class="titulos"><p>Area</p></div></th>
+      <th><div class="titulos"><p>Valor Unitario</p></div></th>
+      <th><div class="titulos"><p>Total</p></div></th>
+    </tr>
+    <%@inmueble.constructions_prices.each do |imcp|%>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, imcp.price.aval_descrip %></div></td>
+        <td><div class="etiquetas_right"><%= label_tag nil, imcp.det_area %></div></td>
+        <td><div class="etiquetas_right"><%= label_tag nil, imcp.det_val_unit %></div></td>
+        <td><div class="etiquetas_right"><%= label_tag nil, imcp.det_val_tot %></div></td>
+      </tr>
+    <%end%>
+    <tr>
+      <td colspan="2"></td>
+      <td><div class="etiquetas_right"><%= label_tag nil, "Valor de Realizacion"%></div></td>
+      <td><div class="etiquetas_right"><%= label_tag nil, @inmueble.inm_val_real %></div></td>
+    </tr>
+  </table>
+  <br/>
+  <div class="titulos"><p>PARAMETROS</p></div>
+  <table class="bordered">
+    <%@inmueble.constructions_parameters.each do |imcp|%>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, imcp.parameter.param_descrip %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, imcp.description.param_val_descrip %></div></td>
+        <td><div class="etiquetas_right"><%= label_tag nil, imcp.description.param_val_unit %></div></td>
+      </tr>
+    <%end%>
+    <tr height="25px"><td colspan="3"></td></tr>
+    <%@inmueble.states.each do |ie|%>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, ie.rebate.met_nombre %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, ie.met_val_descrip %></div></td>
+        <td><div class="etiquetas_right"><%= label_tag nil, ie.met_val_unit %></div></td>
+      </tr>
+    <%end%>
+    <tr height="25px"><td colspan="3"></td></tr>
+    <tr>
+      <td></td>
+      <td><div class="etiquetas_left"><%= label_tag nil, "Valor del Mercado"%></div></td>
+      <td><div class="etiquetas_right"><%= label_tag nil, @inmueble.inm_val_merc %></div></td>
+    </tr>
+  </table>
+  <br/>
+</fieldset>
+<%end%>
+
+<% if current_user.nil? == true %>
+<br/>
+<fieldset id="datos_corredor">
+  <legend class="avaluo">Datos del Corredor</legend>
+  <div id="dc_infomacion">
+  <table class="bordered">
+    <tr>
+      <th><div class="etiquetas_left"><%= label_tag nil, "Apellidos: "%></div></th>
+      <td><div class="etiquetas_left"><%= label_tag nil, @corredor.pers_apellido %></div></td>
+    </tr>
+    <tr>
+      <th><div class="etiquetas_left"><%= label_tag nil, "Nombres: "%></div></th>
+      <td><div class="etiquetas_left"><%= label_tag nil, @corredor.pers_nombre %></div></td>
+    </tr>
+    <tr>
+      <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 1: "%></div></th>
+      <td><div class="etiquetas_left"><%= label_tag nil, @corredor.pers_telefono1 %></div></td>
+    </tr>
+    <tr>
+      <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 2: "%></div></th>
+      <td><div class="etiquetas_left"><%= label_tag nil, @corredor.pers_telefono2 %></div></td>
+    </tr>
+    <tr>
+      <th><div class="etiquetas_left"><%= label_tag nil, "E-Mail: "%></div></th>
+      <td><div class="etiquetas_left"><%= label_tag nil, @corredor.pers_email %></div></td>
+    </tr>
+  </table>
+  </div>
+  
+</fieldset>
+
+<fieldset id="form_contacto">
+  <legend class="avaluo">Formulario de Contacto</legend>
+  <div id="dc_form_contacto">
+    <%= form_tag solicitud_construction_path, :method => 'get', :remote=>true do %>
+      <%= text_field_tag :contacto_nombres, nil, placeholder: 'Nombres', :id=>"check_const_contac_nom"%><br/>
+      <%= text_field_tag :contacto_apellidos, nil, placeholder: 'Apellidos',:id=>"check_const_contac_ape"%><br/>
+      <%= text_field_tag :contacto_email, nil, placeholder: 'E-mail',:id=>"check_const_contac_email"%><br/>
+      <%= text_area_tag :contacto_mensaje, nil, placeholder: 'Mensaje',:id=>"check_const_contac_msg"%><br/>
+      <%= hidden_field_tag :contacto_construction_id, @inmueble.id %>
+      <%= submit_tag "Enviar Mensaje" %>
+    <%end%>
+  </div>
+</fieldset>
+<%end%>
+
+<%if current_user and @propietario.nil? == false%>
+  <br/>
+  <fieldset id="datos_propietario">
+    <legend class="avaluo">Datos del Propietario</legend>
+    <div id="dp_informacion">
+    <table class="bordered">
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Apellidos: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @propietario.pers_apellido %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Nombres: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @propietario.pers_nombre %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 1: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @propietario.pers_telefono1 %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 2: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @propietario.pers_telefono2 %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "E-Mail: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @propietario.pers_email %></div></td>
+      </tr>
+    </table>
+    </div>
+  </fieldset>
+<%end%>
+
+<%if @demandante.nil? == false and current_user.nil? == false%>
+  <br/>
+  <fieldset id="datos_demandante">
+    <legend class="avaluo">Datos del Demandante</legend>
+    <div id="dd_informacion">
+    <table class="bordered">
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Apellidos: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @demandante.pers_apellido %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Nombres: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @demandante.pers_nombre %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 1: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @demandante.pers_telefono1 %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "Telefono 2: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @demandante.pers_telefono2 %></div></td>
+      </tr>
+      <tr>
+        <th><div class="etiquetas_left"><%= label_tag nil, "E-Mail: "%></div></th>
+        <td><div class="etiquetas_left"><%= label_tag nil, @demandante.pers_email %></div></td>
+      </tr>
+    </table>
+    </div>
+    <%if @inmueble.inm_estado == "P"%>
+      <%= form_tag close_construction_path, :method => 'get' do %>
+        <%= hidden_field_tag :construction_id, @inmueble.id %>
+        <div class="boton"><%= submit_tag "Cerrar Negociacion" %></div><br/>
+      <%end%>
+    <%end%>
+
+  </fieldset>
+<%end%>
+<div id="construction_contacto_errores">
+
+</div>
+<div id="construction_contacto_correcto">
+
+</div>

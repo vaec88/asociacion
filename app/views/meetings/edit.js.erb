@@ -1,0 +1,24 @@
+$('#meeting_edit').html('<%= escape_javascript(render :partial =>'meetings/edit')%>');
+$('#meeting_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_meeting form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#meeting_edit").dialog("close");
+                }
+            }
+});
+
+$('#meeting_edit').keypress(function(e) {
+    if (e.keyCode == $.ui.keyCode.ENTER) {
+          $("#form_edit_meeting form").submit();
+    }
+});

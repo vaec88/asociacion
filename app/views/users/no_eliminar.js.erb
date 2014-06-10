@@ -1,0 +1,14 @@
+$('#usuario_no_delete').html('<%= escape_javascript(render :partial =>'users/no_eliminar')%>');
+$('#usuario_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#usuario_no_delete").dialog("close");
+                }
+            }
+});

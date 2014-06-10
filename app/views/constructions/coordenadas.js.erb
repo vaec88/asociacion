@@ -1,0 +1,17 @@
+//alert("coordenadas");
+$('#mapa_coordenadas').html('<%= escape_javascript(render :partial =>'constructions/coordenadas')%>');
+$('#mapa_coordenadas').dialog({
+  resizable: false,
+  height: 'auto',
+  width: '100%',
+  title: "Mapa de Coordenadas",
+  modal: true,
+  buttons: {
+                "Aceptar" : function()
+                {
+                    $("#lat2").val(document.getElementById("lat").textContent);
+                    $("#lng2").val(document.getElementById("lng").textContent);
+                    $("#mapa_coordenadas").dialog("close");
+                }
+            }
+});

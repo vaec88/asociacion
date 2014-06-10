@@ -1,0 +1,19 @@
+$('#usuario_reporte_solicitudes').html('<%= escape_javascript(render :partial =>'solicitudes/reporte_solicitude_formulario')%>');
+$('#usuario_reporte_solicitudes').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Reporte de Solicitudes",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_reporte_solicitude form").submit();
+                    $("#usuario_reporte_solicitudes").dialog("close");
+                },
+                "Cancelar" : function()
+                {
+                    $("#usuario_reporte_solicitudes").dialog("close");
+                }
+            }
+});

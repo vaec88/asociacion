@@ -1,0 +1,90 @@
+<%= javascript_include_tag "validaciones_avaluos.js.erb"%>
+<script>
+  $(document).ready(function() {
+    calculoAvaluo("<%= update_description_val_path %>","<%= update_state_val_path %>");    
+});
+</script>
+
+<%= stylesheet_link_tag "avaluos.css", :media => "screen" %>
+<%= form_tag avaluos_path do %>
+<div id="form_avaluo">
+<fieldset>
+  <legend class="avaluo">Tabla de Avaluo</legend>
+  <br/>
+  <table>
+    <tr>
+      <td><div class="titulos"><p>Descripcion</p></div></td>
+      <td><div class="titulos"><p>Area</p></div></td>
+      <td><div class="titulos"><p>Valor Unitario</p></div></td>
+      <td><div class="titulos"><p>Total</p></div></td>
+    </tr>
+    <% @tabla_avaluo.each do |ta| %>
+      <tr>
+      <td><div class ="etiquetas_left"><%= label_tag nil, ta.aval_descrip, :class => "label_aval_descrip" %></div></td>
+        <%= hidden_field_tag "price_ids[]", ta.id %>
+        <%#= form_tag @imueble_tabla_avaluo do %>
+        <td><%= text_field_tag "det_areas[]", @taa_areas[@cont1], :class => "text_area", :id => "text_area_"+ "#{ta.id}", :style => "width:100px"%></td>
+        <td><%= text_field_tag "det_vals_unit[]", @taa_unitarios[@cont1], :class => "text_val_unit", :id => "text_val_unit_"+ "#{ta.id}", :style => "width:100px" %></td>
+        <td><%= text_field_tag "det_vals_tot[]", @taa_totales[@cont1], :class => "text_val_tot", :id => "text_val_tot_"+ "#{ta.id}", :style => "width:100px", :readonly => true %></td>
+        <%#end%>
+      </tr>
+      <%@cont1+=1%>
+    <%end%>
+    <tr>
+      
+      <td></td>
+      <td></td>
+      <td><div class ="etiquetas_right"><%= label_tag "Valor de Realizacion"%> </div></td>
+      <%#= form_for @inmueble do |i|%>
+        <td><%= text_field_tag :inm_val_real, @taa_val_real, {:id => "text_val_real", :style => "width:100px", :readonly => true} %></td>
+      <%#end%>
+
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend class="avaluo">Parametros de Avaluo</legend>
+  <br/>
+    <table>
+    <% @parametro.each do |p| %>
+      <tr>
+        <td><div class ="etiquetas_left"><%= label_tag nil, p.param_descrip, :class => "label_param_descrip"%></div></td>
+        <%= hidden_field_tag "parameter_ids[]", p.id %>
+        <td><%= select_tag "description_ids[]", options_from_collection_for_select(p.descriptions.each, "id", "param_val_descrip", @description_actual[@cont2]), :class => "description_select", :id => "description_select_"+ "#{p.id}",:prompt => "Seleccione una descripcion", :style => "width:206px"%></td>
+        <td><%= text_field_tag :param_val_unit, @description_actual_valor[@cont2], :id =>"text_param_val_unit_"+ "#{p.id}", :class=>"text_param_val_unit",:style => "width:100px", :disabled => true%></td>
+      </tr>
+      <%@cont2+=1%>
+    <%end%>
+    <tr>
+      <td></td>
+      <td><div class ="etiquetas_right"><%= label_tag "Sumatoria" %></div></td>
+      <td><%= text_field_tag :suma_descrip, @sumatoria1, :id=>"text_sum_descrip", :style => "width:100px", :disabled => true %></td>
+    </tr>
+    <% @met_depr.each do |md| %>
+      <tr>
+        <td><div class ="etiquetas_left"><%= label_tag :met_nombre, md.met_nombre, :class => "label_met_nombre"%></div></td>
+        <td><%= select_tag "state_ids[]", options_from_collection_for_select(md.states.each, "id", "met_val_descrip", @state_actual[@cont3]), :class => "state_select", :id => "state_select_"+ "#{md.id}",:prompt => "Seleccione una opcion", :style => "width:206px"%></td>
+        <td><%= text_field_tag :met_val_unit, @state_actual_valor[@cont3], :id =>"text_met_unit_"+ "#{md.id}", :class=>"text_met_unit",:style => "width:100px", :disabled => true%></td>
+      </tr>
+      <%@cont3+=1%>
+    <%end%>
+    <tr>
+      <td></td>
+      <td><div class ="etiquetas_right"><%= label_tag "Sumatoria" %></div></td>
+      <td><%= text_field_tag :suma_depr, @sumatoria2, :id=>"text_sum_state", :style => "width:100px", :disabled => true %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><div class ="etiquetas_right"><%= label_tag "Valor del Mercado" %></div></td>
+      <td><%= text_field_tag :val_merc, @taa_val_merc, :id=>"text_val_merc", :style => "width:100px", :readonly => true %></td>
+    </tr>
+
+
+  </table>
+</fieldset>
+
+<%= hidden_field_tag :construction_id, @inmueble.id %>
+<div class="boton"><%#= @inmueble.id %><%= submit_tag "Guardar"%></div>
+</div>
+<%end%>
+<br/>

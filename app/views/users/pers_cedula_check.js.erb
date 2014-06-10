@@ -1,0 +1,8 @@
+$('#usuarios_'+'<%= @accion%>'+'_pers_cedula').show();
+<%if @check == "existe"%>
+  $('#usuarios_'+'<%= @accion%>'+'_pers_cedula').html('<%= escape_javascript(@persona.pers_cedula + ' ya existe, por favor ingrese una cedula diferente')%>');
+  document.getElementById('usuarios_'+'<%= @accion%>'+'_pers_cedula').style.color="#F50E0E";
+<%else%>
+  $('#usuarios_'+'<%= @accion%>'+'_pers_cedula').html("El numero de cedula es correcto");
+  document.getElementById('usuarios_'+'<%= @accion%>'+'_pers_cedula').style.color="#008000";
+<%end%>

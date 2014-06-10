@@ -1,0 +1,9 @@
+<div id="formulario">
+  <% if @error == "" %>
+    <%= label_tag nil, "La imagen es muy pesada o el formato no es compatible, verifique lo siguiente:", :id=>"error_images", :class=>"mensaje"%><br/>
+    <%= label_tag nil, "-  El tamaño no debe ser mayor a 2MB ", :id=>"error_images", :class=>"mensaje"%><br/>
+    <%= label_tag nil, "-  El formato admitido es 'jpeg', 'png' ", :id=>"error_images", :class=>"mensaje"%><br/>
+  <%else%>
+    <%= label_tag nil, "#{@error}"%><br/>
+  <%end%>
+</div>

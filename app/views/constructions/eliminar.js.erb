@@ -1,0 +1,18 @@
+$('#construction_delete').html('<%= escape_javascript(render :partial =>'constructions/eliminar')%>');
+$('#construction_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_eliminar_construction form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#construction_delete").dialog("close");
+                }
+            }
+});

@@ -1,0 +1,26 @@
+document.getElementById("states_index_met_val_descrip").style.border="1px solid #ddd";
+document.getElementById("states_index_met_val_unit").style.border="1px solid #ddd";
+$('#state_edit').html('<%= escape_javascript(render :partial =>'states/edit')%>');
+$('#state_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_state form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#state_edit").dialog("close");
+                }
+            }
+});
+
+$('#state_edit').keypress(function(e) {
+    if (e.keyCode == $.ui.keyCode.ENTER) {
+          $("#form_edit_state form").submit();
+    }
+});

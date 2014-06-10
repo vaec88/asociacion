@@ -1,0 +1,23 @@
+$('#parish_new').html('<%= escape_javascript(render :partial =>'parishes/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@parroquia.parr_nombre}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#parish_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#parish_new").dialog("close");
+                    document.getElementById("parishes_index_parr_nombre").focus();
+                    $('#parishes_index_parr_nombre').val("");
+                }
+            }
+});

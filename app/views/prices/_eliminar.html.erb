@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_price">
+  <%= form_tag destroy_price_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@tabla_avaluo.aval_descrip}'"%>
+    <%= hidden_field_tag :id, @tabla_avaluo.id  %>
+  <%end%>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_construction">
+  <%= form_tag destroy_construction_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar el inmueble ubicado en el sector '#{@inmueble.inm_ciudadela}'"%>
+    <%= hidden_field_tag :id, @inmueble.id  %>
+  <%end%>
+  </div>
+</div>

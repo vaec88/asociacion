@@ -1,0 +1,15 @@
+<%if @check == "existe"%>
+  $('#usuarios_'+'<%= @accion%>'+'_usu_matr_prof').html('<%= escape_javascript(@usuario.usu_matr_prof + ' ya existe, por favor ingrese una matricula diferente')%>');
+  $('#usuarios_'+'<%= @accion%>'+'_usu_matr_prof').show();
+<%else%>
+  <%if @usuario == ""%>
+    $('#usuarios_'+'<%= @accion%>'+'_usu_matr_prof').html('<%= escape_javascript("Debe ingresar una Matricula Profesional")%>');
+    $('#usuarios_'+'<%= @accion%>'+'_usu_matr_prof').show();
+  <%else%>
+    $('#usuarios_'+'<%= @accion%>'+'_usu_matr_prof').hide();
+  <%end%>
+<%end%>
+    
+/*<%#else%>
+  $('#usuarios_new_usu_matr_prof').hide();
+<%#end%>*/

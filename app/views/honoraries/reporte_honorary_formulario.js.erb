@@ -1,0 +1,19 @@
+$('#usuario_reporte_honoraies').html('<%= escape_javascript(render :partial =>'honoraries/reporte_honorary_formulario')%>');
+$('#usuario_reporte_honoraies').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Reporte de Honorarios",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_reporte_honorary form").submit();
+                    $("#usuario_reporte_honoraies").dialog("close");
+                },
+                "Cancelar" : function()
+                {
+                    $("#usuario_reporte_honoraies").dialog("close");
+                }
+            }
+});

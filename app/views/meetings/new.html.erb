@@ -1,0 +1,18 @@
+<%= form_for @reunion do |r|%>
+  <div id="formulario">
+    <table>
+      <tr>
+        <td><%= r.label "Actores: " %></td>
+        <td><%= r.text_field :reu_actores, :class=>"textarea" %></td>
+      </tr>
+      <tr>
+        <td><%= r.label "Detalle: " %></td>
+        <td><%= r.text_area :reu_detalle, :class=>"textarea" %></td>
+      </tr>
+      <%= hidden_field_tag :construction_id, @inmueble.id%>
+      <tr>
+        <td colspan="2" class="boton"><%= r.submit "Guardar"%></td>
+      </tr>
+    </table>
+  </div>
+<%end%>

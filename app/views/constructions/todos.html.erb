@@ -1,0 +1,31 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Ubicacion</p></div></th>
+    <th><div class="titulos"><p>Detalle</p></div></th>
+    <th><div class="titulos"><p>Inversion</p></div></th>
+    <th><div class="titulos"><p>Propietario</p></div></th>
+    <th><div class="titulos"><p>Demandante</p></div></th>
+    <% @inmueble.each do |inm| %>
+      <tr>
+        <td><%= label_tag nil, "#{inm.parish.canton.province.prov_nombre} - #{inm.parish.canton.cant_nombre} - #{inm.parish.parr_nombre}" %></td>
+        <td><%= label_tag nil, "#{inm.operation.oper_nombre} de #{inm.property.propd_nombre} en sector #{inm.inm_ciudadela}, calle #{inm.inm_calle}" %></td>
+        <td><%= label_tag nil, "$ #{inm.inm_val_merc}" %></td>
+        <%propietario = inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_propietario.id}).first%>
+        <td><%= label_tag nil, "#{propietario.pers_apellido} #{propietario.pers_nombre}" %></td>
+        <%if inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_demandante.id}).first%>
+          <%demandante = inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_demandante.id}).first%>
+          <td><%= label_tag nil, "#{demandante.pers_apellido} #{demandante.pers_nombre}" %></td>
+        <%else%>
+          <td><%= label_tag nil, "Pendiente" %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_constructions", :id=>1}, :target=>"_blank")%>
+<div id="usuario_reporte_constructions">
+
+</div>

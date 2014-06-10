@@ -1,0 +1,33 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Nombre Division</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @partes.each do |p| %>
+      <tr>
+        <td><%= label_tag nil, p.part_nombre %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => p.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action => "eliminar", :id => p.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+    <%= form_for @parte, :remote=>true do |p|%>
+      <tr>
+        <td><%= p.text_field :part_nombre, :id=>"pieces_index_part_nombre", :autofocus => true %></td>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="piece_new">
+
+</div>
+<div id="piece_edit">
+
+</div>
+<div id="piece_delete">
+
+</div>
+<div id="piece_no_delete">
+
+</div>

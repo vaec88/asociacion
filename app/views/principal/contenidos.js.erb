@@ -1,0 +1,13 @@
+var bandera = '<%= @bandera %>';
+if (bandera == 'resena')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/resena')%>');}
+if (bandera == 'etica')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/etica')%>');}
+if (bandera == 'ley')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/ley')%>');}
+if (bandera == 'reglamento')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/reglamento')%>');}
+if (bandera == 'directivos')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/directivos')%>');}
+if (bandera == 'mision')
+{ $('#contenido').html('<%= escape_javascript(render :partial =>'principal/mision')%>');}

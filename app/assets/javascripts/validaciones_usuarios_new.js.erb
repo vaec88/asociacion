@@ -1,0 +1,265 @@
+/*VALIDACION PARA NOMBRE DE USUARIO UNICO*/
+$(".usuarios_errores").hide();
+      /*NO INGRESAR ESPACIOS EN BLANCO*/
+      function isBlankKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode == 32)
+            return false;
+
+         return true;
+      }
+	  
+      /*INGRESAR SOLO NUMEROS*/
+      function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+      /*INGRESAR SOLO LETRAS*/
+      function isLetterKey(event) {
+          var inputValue = event.which;
+          //alert(inputValue);
+        //if digits or not a space then don't let keypress work.
+        if((inputValue > 32 && inputValue < 65) || (inputValue > 90 && inputValue < 97) || (inputValue > 122 && inputValue < 209) || (inputValue > 209 && inputValue < 241) || (inputValue > 241)){
+            event.preventDefault();
+        }
+      }
+	  /*VALIDACION PARA NOMBRE DE USUARIO UNICO*/
+	function usu_username_unico(usu_username_check){
+		  var obj_usu_username = document.getElementById("check_usu_username");
+		  obj_usu_username.onchange=function(){
+			//alert(obj_usu_username.value);
+			$.ajax({
+			  url: usu_username_check,
+			  data: {
+				usu_username : obj_usu_username.value,
+					accion : "new"
+			  },
+			  dataType: "script"
+			});
+		  };
+	}
+      /*VALIDACION PARA CONTRASEÑA: LONGITUD, MAYUSCULAS, MINUSCULAS, NUMEROS*/
+	function checkPassword(){
+      var obj_usu_password = document.getElementById("check_usu_password");
+      obj_usu_password.onchange=function(){
+        var password = obj_usu_password.value;
+        var hasUpper = password.match(/[A-Z]/)
+        var hasLower = password.match(/[a-z]/g)
+        var hasNumber = password.match(/[0-9]/g)
+        var longitud = password.length
+        if (password==""){
+          $("#usuarios_new_usu_password").show();
+          $("#usuarios_new_usu_password").html("Debe ingresar una Contraseña");
+          }
+        else{
+          if (hasUpper && hasLower && hasNumber && longitud>5 && longitud<17) {
+            $("#usuarios_new_usu_password").hide();
+            //return true;
+          }
+          else {
+            $("#usuarios_new_usu_password").show();
+            $("#usuarios_new_usu_password").html("La contraseña debe tener minimo 6 caracteres y maximo 16, con mayusculas, minusculas y numeros");
+            //return false;
+          }
+        }  
+      };
+	}
+      /*VALIDACION PARA CONFIRMACION DE CONTRASEÑA*/
+      function checkPasswordMatch() {
+        var password = $("#check_usu_password").val();
+        var confirmPassword = $("#check_usu_password_confirm").val();
+        
+        if (confirmPassword==""){
+          $("#usuarios_new_usu_password_confirm").show();
+          $("#usuarios_new_usu_password_confirm").html("Debe confirmar la contraseña");
+        }
+        else{
+          if (password != confirmPassword){
+            $("#usuarios_new_usu_password_confirm").show();
+            $("#usuarios_new_usu_password_confirm").html("Las contraseñas no coinciden!");
+          }
+          else
+            $("#usuarios_new_usu_password_confirm").hide();
+        }
+      }
+	/*VALIDACION PARA MATRICULA PROFESIONAL UNICO*/
+	function usu_matr_prof_unico(usu_matr_prof_check){
+      var obj_usu_matr_prof = document.getElementById("check_usu_matr_prof");
+      obj_usu_matr_prof.onchange=function(){
+        //alert(obj.value);
+        $.ajax({
+          url: usu_matr_prof_check,
+          data: {
+            usu_matr_prof : obj_usu_matr_prof.value,
+			accion : "new"
+          },
+          dataType: "script"
+        });
+      };
+	}
+	/*VALIDACION PARA LA CEDULA*/
+	function checkCedula(pers_cedula_check){
+        var obj_cedula = document.getElementById("check_pers_cedula");
+        obj_cedula.maxLength = 10;
+		obj_cedula.onchange=function(){
+			var cedula = obj_cedula.value;
+			var cedulaLength = cedula.length;
+			var sumando = 0;
+			var total=0;
+			var decenaSuperior = 0;
+			var digito10 = cedula[9];
+			var digito10Cal = 0;
+			if (cedulaLength==10){
+			  for(i=0;i<9;i++){
+				sumando=parseInt(cedula[i]);
+				if (i%2==0){
+				  sumando=parseInt(cedula[i]*2);
+				  if (sumando>9)
+					sumando=parseInt(sumando-9);
+				}
+				total=parseInt(total+sumando);
+			  }
+			  decenaSuperior = ((parseInt(total/10)+1)*10);
+			  digito10Cal = (decenaSuperior-total);
+			  $("#usuarios_new_pers_cedula").show();
+			  if ((digito10Cal==10 && digito10==0) || (digito10 == digito10Cal)){
+				$.ajax({
+				  url: pers_cedula_check,
+				  data: {
+					pers_cedula : cedula,
+					accion : "new"
+				  },
+				  dataType: "script"
+				});
+			  }
+			  else{
+				if (digito10Cal==10)
+				  digito10Cal = 0;
+				$("#usuarios_new_pers_cedula").html("El ultimo digito debe ser " + digito10Cal);
+				document.getElementById("usuarios_new_pers_cedula").style.color="#F50E0E";
+			  }
+			}
+			else{
+			  if (cedula==""){
+				$("#usuarios_new_pers_cedula").html("Debe ingresar un Numero de Cedula");
+			  }
+			  else{
+				$("#usuarios_new_pers_cedula").html("El Numero de Cedula debe tener 10 digitos");
+			  }
+			  $("#usuarios_new_pers_cedula").show();
+			  document.getElementById("usuarios_new_pers_cedula").style.color="#F50E0E";
+			}
+        }
+      }
+      /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+      function checkApellido(){
+        var obj_apellido = document.getElementById("check_pers_apellido");
+        if (obj_apellido.value==""){
+          $("#usuarios_new_pers_apellido").html("Debe ingresar los Apellidos");
+          $("#usuarios_new_pers_apellido").show();
+        }
+        else{
+          $("#usuarios_new_pers_apellido").hide();
+        }
+      }
+
+      function checkNombre(){
+        var obj_nombre = document.getElementById("check_pers_nombre");
+        if (obj_nombre.value==""){
+          $("#usuarios_new_pers_nombre").html("Debe ingresar los Nombres");
+          $("#usuarios_new_pers_nombre").show();
+        }
+        else{
+          $("#usuarios_new_pers_nombre").hide();
+        }
+      }
+
+      function checkDireccion(){
+        var obj_direccion = document.getElementById("check_pers_direccion");
+        if (obj_direccion.value==""){
+          $("#usuarios_new_pers_direccion").html("Debe ingresar una Direccion");
+          $("#usuarios_new_pers_direccion").show();
+        }
+        else{
+          $("#usuarios_new_pers_direccion").hide();
+        }
+      }
+	  /*NUMERO CONVENCIONAL Y CELULAR*/
+	  function checkTelefono1(){
+		var obj_telefono1 = document.getElementById("check_pers_telefono1");
+		obj_telefono1.maxLength = 9;
+		obj_telefono1.onchange=function(){
+			var telefono1 = obj_telefono1.value;
+			var telefono1Length = telefono1.length;
+			if(telefono1Length==9){
+				$("#usuarios_new_pers_telefono1").hide();
+			}
+			else{
+				if (telefono1==""){
+				  $("#usuarios_new_pers_telefono1").hide();
+				}
+				else{
+				  $("#usuarios_new_pers_telefono1").html("El Numero Convencional debe tener 9 digitos");
+				  $("#usuarios_new_pers_telefono1").show();
+				}
+			}
+		}
+	  }
+	  
+      function checkTelefono2(){
+        var obj_telefono2 = document.getElementById("check_pers_telefono2");
+		obj_telefono2.maxLength = 10;
+		obj_telefono2.onchange=function(){
+			var telefono2 = obj_telefono2.value;
+			var telefono2Length = telefono2.length;
+			if(telefono2Length==10){
+				$("#usuarios_new_pers_telefono2").hide();
+			}
+			else{
+				if (telefono2==""){
+				  $("#usuarios_new_pers_telefono2").html("Debe ingresar un Numero de Celular");
+				}
+				else{
+				  $("#usuarios_new_pers_telefono2").html("El Numero de Celular debe tener 10 digitos");
+				}
+				$("#usuarios_new_pers_telefono2").show();
+			}
+		}
+      }
+	  
+	/*VALIDACION DE EMAIL*/
+      function checkEmail(pers_email_check){
+		var obj_email = document.getElementById("check_pers_email");
+		obj_email.onchange=function(){
+			var email = obj_email.value;
+			//alert(email);
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			var isValidEmail = re.test(email);
+			if (email==""){
+			  $("#usuarios_new_pers_email").show();
+			  $("#usuarios_new_pers_email").html("Debe ingresar un Correo Electronico");
+			}
+			else{
+			  if (isValidEmail){
+				$.ajax({
+				  url: pers_email_check,
+				  data: {
+					pers_email : email,
+					accion : "new"
+				  },
+				  dataType: "script"
+				});
+				//$("#usuarios_new_pers_email").hide();
+			  }
+			  else{
+				$("#usuarios_new_pers_email").show();
+				$("#usuarios_new_pers_email").html("Correo Electronico no valido");
+			  }
+			}
+		}
+      }

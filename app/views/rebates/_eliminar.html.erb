@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_rebate">
+  <%= form_tag destroy_rebate_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@depreciacion.met_nombre}'"%>
+    <%= hidden_field_tag :id, @depreciacion.id  %>
+  <%end%>
+  </div>
+</div>

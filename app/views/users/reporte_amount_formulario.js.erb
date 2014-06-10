@@ -1,0 +1,20 @@
+//alert("Aqui va el formulario");
+$('#usuario_reporte_amount').html('<%= escape_javascript(render :partial =>'users/reporte_amount_formulario')%>');
+$('#usuario_reporte_amount').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Reporte de Pagos de Usuarios",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_reporte_usuario form").submit();
+                    $("#usuario_reporte_amount").dialog("close");
+                },
+                "Cancelar" : function()
+                {
+                    $("#usuario_reporte_amount").dialog("close");
+                }
+            }
+});

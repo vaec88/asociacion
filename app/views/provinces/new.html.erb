@@ -1,0 +1,9 @@
+<%= form_for @provincia do |p|%>
+  <p>
+    <%= p.label :"Nombre de Provincia" %>
+    <%= p.text_field :prov_nombre %>
+  </p>
+  <p>
+    <%= p.submit "Guardar"%>
+  </p>
+<%end%>

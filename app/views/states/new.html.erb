@@ -1,0 +1,14 @@
+<%= form_for @estado do |e|%>
+  <p>
+    <%= e.label :"Estado del Metodo de Depreciacion" %>
+    <%= e.text_field :met_val_descrip %>
+  </p>
+  <p>
+    <%= e.label :"Valor del Metodo de Depreciacion" %>
+    <%= e.text_field :met_val_unit %>
+  </p>
+  <%= e.hidden_field :rebate_id, value: @id %>
+  <p>
+    <%= e.submit "Guardar"%>
+  </p>
+<%end%>

@@ -1,0 +1,9 @@
+<%= form_for @captacion do |c|%>
+  <p>
+    <%= c.label :"Medio de Captacion" %>
+    <%= c.text_field :capt_nombre %>
+  </p>
+  <p>
+    <%= c.submit "Guardar"%>
+  </p>
+<%end%>

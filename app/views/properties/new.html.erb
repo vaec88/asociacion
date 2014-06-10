@@ -1,0 +1,9 @@
+<%= form_for @propiedad do |p|%>
+  <p>
+    <%= p.label :"Tipo de Propiedad" %>
+    <%= p.text_field :propd_nombre %>
+  </p>
+  <p>
+    <%= p.submit "Guardar"%>
+  </p>
+<%end%>

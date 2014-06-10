@@ -1,0 +1,121 @@
+.avaluo
+{
+    margin: 0px 15px;
+    padding: 0px 25px;
+	font-family: sans-serif, 'Lucida Grande', Tahoma, Verdana;
+	font-weight: bold;
+}
+
+table{
+	margin: auto;
+}
+
+fieldset
+{
+    margin: 15px 20px;
+}
+
+fieldset td {
+	vertical-align: middle;
+	text-align: center;
+	/*margin-left:auto;
+	margin-right:auto;*/
+}
+
+fieldset td input{
+	
+}
+
+.etiquetas_left{
+	text-align: left;
+	margin-right: 25px;
+	width: auto;
+}
+
+.etiquetas_right{
+	text-align: right;
+	margin-right: 25px;
+}
+
+#form_avaluo select{
+	margin-right: 25px;
+}
+
+.boton {
+	text-align: center;
+}
+
+/*DESDE AQUI EMPIEZAN LOS ESTILOS PARA CONSTRUCTION/SHOW*/
+#mostrar_imagen{
+	text-align: center;
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+#ocultar{display: none;}
+
+#mostrar_imagen label{	
+	font: normal 12px sans-serif, Calibri, "Times New Roman";
+	margin: 0px 0px;
+}
+
+#mostrar_texto .etiquetas_left{
+	/*margin-right: 0px;
+	margin-left: 0px;*/
+}
+
+#mostrar_texto label{
+	/*font-size: 12px;
+	margin: 10px;*/
+}
+
+#mostrar_texto table, #datos_inmueble table, #detalle_avaluo table, #datos_corredor table, #datos_propietario table,
+#datos_demandante table{
+	/*border: thin white solid;*/
+	border-spacing: 0;
+	background-color: white;
+}
+
+#detalle_avaluo .titulos *{
+	margin: 10px 0px;
+}
+
+#datos_corredor, #form_contacto{
+	width: 45%;
+	float: left;
+}
+
+#dc_infomacion, #dc_form_contacto, #dp_informacion, #dd_informacion{
+	/*margin-top: 20px;
+	margin-left: 20px;
+	margin-bottom: 20px;*/
+	margin: 20px auto;
+}
+#dc_form_contacto{margin-left:70px;}
+#dc_form_contacto input[type=submit]{margin-left:65px;}
+/*#dc_infomacion, #dc_form_contacto{float:left;}*/
+
+#dc_form_contacto input[type=text], #dc_form_contacto textarea{
+	margin-top: 3px;
+	font-family: sans-serif, 'Lucida Grande', Tahoma, Verdana;
+	font-size: 14px;
+	width: 250px;
+}
+
+#dc_form_contacto textarea{
+	height: 150px;
+}
+
+#mostrar_texto td{
+	/*width: 150px;*/
+}
+
+#mostrar_texto td.negrita{
+	font-weight: bold;
+	/*width: auto;*/
+}
+
+textarea{
+	resize: none;
+}

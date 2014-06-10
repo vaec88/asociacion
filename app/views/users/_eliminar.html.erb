@@ -1,0 +1,10 @@
+<div id="formulario">
+  <div id="form_eliminar_usuario">
+    <%= form_tag destroy_usuario_path do%>
+      <%= label_tag nil, "Se eliminará toda la información de este usuario: Inmuebles, Avaluos, Honorarios y demás."%><br/>
+      <%= label_tag nil, "Esta seguro que desea eliminar a '#{@persona.pers_nombre}'"%>
+      <%= hidden_field_tag :id, @persona.id  %>
+      <%= hidden_field_tag :usuario_id, @usuario.id  %>
+    <%end%>
+  </div>
+</div>

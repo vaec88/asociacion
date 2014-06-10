@@ -1,0 +1,48 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= javascript_include_tag "validaciones_states_new.js"%>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#states_index_met_val_unit").keypress(isNumberKey);
+    });
+  </script>
+<%= label_tag nil, (link_to ">> Metodos de Depreciacion ", index_rebate_path), :class=>"negrita" %><%= label_tag nil, (">> " + @rebate.met_nombre), :class=>"negrita" %>
+<div id="tabla">
+  <table class="bordered">
+    <%#= @canton.cant_nombre %>
+    <th><div class="titulos"><p>Nombre del Estado</p></div></th>
+    <th><div class="titulos"><p>Valor</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @estados.each do |e| %>
+      <tr>
+        <td><%= label_tag nil, e.met_val_descrip %></td>
+        <td><%= label_tag nil, (number_with_precision e.met_val_unit, :precision => 4) %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => e.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action => "eliminar", :id => e.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+
+    <%= form_for @estado, :remote=>true do |e|%>
+      <tr>
+        <td><%= e.text_field :met_val_descrip, :id=>"states_index_met_val_descrip", :autofocus => true, :class=>"width_auto"%></td>
+        <td><%= e.text_field :met_val_unit, :id=>"states_index_met_val_unit", :style=>"width:50px"%></td>
+        <%= e.hidden_field :rebate_id, value: @id %>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="state_new">
+
+</div>
+<div id="state_edit">
+
+</div>
+<div id="state_delete">
+
+</div>
+<div id="state_no_delete">
+
+</div>
+<%#= link_to 'Agregar nuevo estado para el metodo', new_state_path(:rebate_id => @id) %>

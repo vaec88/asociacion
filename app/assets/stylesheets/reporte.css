@@ -1,0 +1,35 @@
+#todo{
+	/*width: 900px;*/
+	width: auto;
+	margin: 0 auto;
+	/*border: thin blue solid;*/
+}
+#margenes_hoja{
+	/*width: 2480px;
+	height: 3508px; ESTOS SON LOS TAMAÑOS PARA A4*/
+	/*width:689px;*/
+	width:auto;
+	margin: 0 auto;
+	border: thin black solid;
+}
+#imagen_cabecera img{
+	/*width: 689px;*/
+	width: 100%;
+	height: 177px;
+}
+
+#todo h1
+{   text-align: center;
+    font: bold 25px Calibri, "Times New Roman";
+    line-height: 5px;
+    /*background-color: #add8e6;*/
+    padding: 15px 15px;
+    margin: 10px 25px;
+    border: thin white solid;
+    color: black;
+}
+
+#todo .titulos *{
+	text-align: center;
+	font-weight: bold;
+}

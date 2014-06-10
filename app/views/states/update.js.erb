@@ -1,0 +1,36 @@
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_edit').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @met_val_descrip%>' == "blank")
+  { document.getElementById("states_edit_met_val_descrip").style.border="1px solid #dc143c";
+    document.getElementById("states_edit_met_val_descrip").focus();
+  }
+  else
+  { document.getElementById("states_edit_met_val_descrip").style.border="1px solid #ddd";
+    document.getElementById("states_edit_met_val_unit").focus();
+  }
+}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_edit').html('<%= escape_javascript('El nombre ya existe, por favor ingrese uno diferente')%>');
+    document.getElementById("states_edit_met_val_descrip").style.border="1px solid #dc143c";
+    $("#states_edit_met_val_descrip").val("");
+    document.getElementById("states_edit_met_val_descrip").focus();
+  }
+}
+
+if ('<%= @met_val_unit%>' == "blank")
+    { document.getElementById("states_edit_met_val_unit").style.border="1px solid #dc143c";}
+    else
+    { document.getElementById("states_edit_met_val_unit").style.border="1px solid #ddd";}
+
+function trim(cadena)
+{
+var retorno = cadena.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#states_edit_met_val_descrip").val(retorno);
+//alert(retorno);
+}
+
+document.getElementById("advertencia_edit").style.color="#F50E0E";
+$('#advertencia_edit').show();
+setTimeout(function(){$('#advertencia_edit').hide()},6000);
+trim(document.getElementById("states_edit_met_val_descrip").value);

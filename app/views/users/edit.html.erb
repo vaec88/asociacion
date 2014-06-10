@@ -1,0 +1,165 @@
+<head>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/sliding.form.js"></script>
+  <%= javascript_include_tag "validaciones_usuarios_edit.js.erb"%>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      //alert(obj_usuario_id.value);
+      /*VALIDACION PARA NOMBRE DE USUARIO UNICO*/usu_username_unico("<%= usu_username_check_path %>");
+      /*VALIDACION PARA CONTRASEÑA: LONGITUD, MAYUSCULAS, MINUSCULAS, NUMEROS*///checkPassword();
+      /*VALIDACION PARA CONFIRMACION DE CONTRASEÑA*/
+      /*$("#check_usu_password").change(checkPasswordMatch);
+      $("#check_usu_password_confirm").change(checkPasswordMatch);*/
+      /*VALIDACION PARA MATRICULA PROFESIONAL UNICO*/usu_matr_prof_unico("<%= usu_matr_prof_check_path %>");
+      /*VALIDACION PARA LA CEDULA*/
+      $("#check_pers_cedula").keypress(isNumberKey);
+      checkCedula("<%= pers_cedula_check_path %>");
+      /*CAMPOS DE SOLO LETRAS*/
+      $("#check_pers_apellido").keypress(isLetterKey);
+      $("#check_pers_nombre").keypress(isLetterKey);
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#check_pers_telefono1").keypress(isNumberKey);
+      $("#check_pers_telefono2").keypress(isNumberKey);
+      /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+      $("#check_pers_apellido").change(checkApellido);
+      $("#check_pers_nombre").change(checkNombre);
+      $("#check_pers_direccion").change(checkDireccion);
+      checkTelefono1();
+      checkTelefono2();
+      //$("#check_pers_telefono2").change(checkTelefono2);
+      /*VALIDACION DE EMAIL*/checkEmail("<%= pers_email_check_path %>");
+      /*VALIDACION PARA EDITAR CONTRASEÑA*/editarPassword("<%= edit_password_path%>");
+      /*VALIDACION PARA NO INGRESAR ESPACIOS EN BLANCO*/
+      $("#check_usu_username").keypress(isBlankKey);
+      $("#check_usu_password_old").keypress(isBlankKey);
+      $("#check_usu_password").keypress(isBlankKey);
+      $("#check_usu_password_confirm").keypress(isBlankKey);
+      $("#check_pers_email").keypress(isBlankKey);
+      $("#old_password").hide();
+      $("#new_password").hide();
+    });
+  </script>
+</head>
+<h1>Gestión de Corredores</h1>
+<%if current_rol.first.id == 1%>
+  <%= label_tag nil, (link_to ">> Usuarios ", index_usuarios_path), :class=>"negrita" %><%= label_tag nil, (">> Editar" ), :class=>"negrita" %>
+<%end%>
+<div id="content">
+<div id="wrapper">
+  <div id="steps">
+      <%= form_for @user, :html => {:multipart => true}, :remote=>true do |f|%>
+      <fieldset class="step">
+        <legend>Cuenta</legend>
+          <%= hidden_field_tag(:usuario_id, @user.id, :id=>"hidden_usuario_id")%>
+          <p>
+            <%= label_tag nil, "Nombre de Usuario" %>
+            <%= f.text_field :username, :id=>"check_usu_username", :autocomplete => :off, :autofocus=>true%><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_usu_username", :class=>"usuarios_errores" %>
+          </p>
+          <div id="old_password">
+            <p>
+              <%= label_tag nil, "Contraseña" %>
+              <%= label_tag nil, (link_to "Editar", "#", :id=>"link_edit_password"), :class=>"negrita" %>
+            </p>
+          </div>
+          <div id="new_password">
+            <p>
+              <%= label_tag nil, "Contraseña Actual" %>
+              <%= password_field_tag :usu_password_old, nil, :id=>"check_usu_password_old" %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+              <%= label_tag nil, "", :id=>"usuarios_edit_usu_password_old", :class=>"usuarios_errores" %><br/>
+
+              <%= label_tag nil, "Nueva Contraseña" %>
+              <%= password_field_tag :password, nil, :id=>"check_usu_password" %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+              <%= label_tag nil, "", :id=>"usuarios_edit_usu_password", :class=>"usuarios_errores" %><br/>
+
+              <%= label_tag nil, "Confirmar Contraseña" %>
+              <%= password_field_tag :password_confirmation, nil, :id=>"check_usu_password_confirm" %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+              <%= label_tag nil, "", :id=>"usuarios_edit_usu_password_confirm", :class=>"usuarios_errores" %><br/>
+
+              <%= label_tag nil, (link_to "Aceptar", "#", :id=>"link_accept_password"), :class=>"negrita" %>
+              <%= label_tag nil, (link_to "Cancelar", "#", :id=>"link_cancel_password"), :class=>"negrita" %>
+            </p>
+          </div>
+          
+          <p>
+            <%= label_tag nil, "Matricula Profesional" %>
+            <%= f.text_field :usu_matr_prof, :id=>"check_usu_matr_prof", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_usu_matr_prof", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Pagina Web" %>
+            <%= f.text_field :usu_pag_web, :id=>"check_usu_pag_web", :autocomplete => :off%>
+          </p>
+          <p>
+            <%= label_tag nil, "Foto" %>
+            <%= f.file_field :usu_foto %>
+          </p>
+      </fieldset>
+      <fieldset class="step">
+        <legend>Datos Personales</legend>
+          <%= fields_for @person do |f| %>
+          <%= hidden_field_tag(:persona_id, @person.id, :id=>"hidden_persona_id")%>
+          <p>
+            <%= label_tag nil, "Cedula" %>
+            <%= f.text_field :pers_cedula, :id=>"check_pers_cedula", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_cedula", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Apellidos" %>
+            <%= f.text_field :pers_apellido, :id=>"check_pers_apellido", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_apellido", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Nombres" %>
+            <%= f.text_field :pers_nombre, :id=>"check_pers_nombre", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_nombre", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Direccion" %>
+            <%= f.text_field :pers_direccion, :id=>"check_pers_direccion", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_direccion", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Telefono Convencional" %>
+            <%= f.text_field :pers_telefono1, :id=>"check_pers_telefono1", :autocomplete => :off %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_telefono1", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Telefono Celular" %>
+            <%= f.text_field :pers_telefono2, :id=>"check_pers_telefono2", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_telefono2", :class=>"usuarios_errores" %>
+          </p>
+          <p>
+            <%= label_tag nil, "Correo Electronico" %>
+            <%= f.text_field :pers_email, :id=>"check_pers_email", :autocomplete => :off %><%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+            <%= label_tag nil, "", :id=>"usuarios_edit_pers_email", :class=>"usuarios_errores" %>
+          </p>
+          <%end%>
+          <p class="submit">
+            <button id="registerButton" type="submit">
+              Guardar<% f.submit "Guardar"%>
+            </button>
+          </p>
+          </fieldset>
+      <%end%>
+    <!--</form>-->
+  </div>
+  <div id="navigation" style="display:none;">
+    <ul>
+      <li class="selected">
+        <a href="#">Cuenta</a>
+      </li>
+      <li>
+        <a href="#">Datos Personales</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+<div id="new_edit_error">
+  
+</div>
+<div id="nota_obligatorios">
+  <%= label_tag nil, "Nota: Los campos marcados con el simbolo asterisco (*) son obligatorios y no pueden quedar vacios", :class=>"campo_obligatorio" %>
+</div>

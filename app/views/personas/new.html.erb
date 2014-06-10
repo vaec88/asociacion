@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <script language="JavaScript" type="text/javascript" src="/javascripts/sliding.form.js"></script>
+    <%= javascript_include_tag "validaciones_personas_new.js.erb"%>
+    <script>
+      $(document).ready(function() {
+        /*VALIDACION PARA LA CEDULA*/
+        $("#pers_demand_cedula").keypress(isNumberKey);
+        checkCedulaDemand("<%= update_demandante_path %>");
+        /*CAMPOS DE SOLO LETRAS*/
+        $("#pers_demand_apellidos").keypress(isLetterKey);
+        $("#pers_demand_nombres").keypress(isLetterKey);
+        /*CAMPOS DE SOLO NUMEROS*/
+        $("#pers_demand_telefono1").keypress(isNumberKey);
+        $("#pers_demand_telefono2").keypress(isNumberKey);
+        /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+        $("#pers_demand_apellidos").change(checkApellidoDemand);
+        $("#pers_demand_nombres").change(checkNombreDemand);
+        $("#pers_demand_direccion").change(checkDireccionDemand);
+        $("#pers_demand_telefono2").change(checkTelefono2Demand);
+        /*VALIDACION DE EMAIL*/
+        checkEmailDemand("<%= constructions_demand_email_check_path %>");
+        /*VALIDACION PARA NO INGRESAR ESPACIOS EN BLANCO*/
+        $("#pers_demand_email").keypress(isBlankKey);
+
+        $('#pers_demand_cedula').change(function(event) {
+          $.ajax({
+            url: "<%= update_demandante_path %>",
+            data: {
+              numero_cedula : $(this).val()
+            },
+            dataType: "script"
+          });
+        });
+      });
+    </script>   
+  </head>
+  <body>
+    <div id="content">
+      <div id="wrapper">
+        <div id="steps">
+          <%= form_for @demandante, :remote=>true do |i| %>
+            <fieldset class="step">
+              <legend>Demandante</legend>
+              <%= hidden_field_tag(:propietario_id, @propietario.id, :id=>"hidden_propietario_id")%> <!-- PARA VERIFICAR QUE DEMANDANTE NO SEA PROPIETARIO (LA MISMA PERSONA) -->
+              <p>
+                <%= label_tag nil, "Cedula"%>
+                <%= i.text_field :pers_cedula, :id => "pers_demand_cedula" %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_cedula", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Apellidos"%>
+                <%= i.text_field :pers_apellido, :id => "pers_demand_apellidos"%>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_apellido", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Nombres"%>
+                <%= i.text_field :pers_nombre, :id => "pers_demand_nombres" %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_nombre", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Direccion"%>
+                <%= i.text_field :pers_direccion, :id => "pers_demand_direccion" %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_direccion", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Telefono Convencional"%>
+                <%= i.text_field :pers_telefono1, :id => "pers_demand_telefono1" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Telefono Celular"%>
+                <%= i.text_field :pers_telefono2, :id => "pers_demand_telefono2" %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_telefono2", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Correo Electronico"%>
+                <%= i.text_field :pers_email, :id => "pers_demand_email" %>
+                <%= label_tag nil, "", :id=>"constructions_new_demand_email", :class=>"constructions_errores" %>
+              </p>
+              <%= hidden_field_tag :demand_existe, "no",:id => "pers_demand_existe" %>
+              <div id="captaciones_channels">
+                <table>
+                  <tr>
+                    <td class="centrar" colspan="3"><%= label_tag nil, "Medio de Captación", :class=>"titulo"%></td>
+                  </tr>
+                  <% @captaciones.in_groups_of(3, false).each do |cg| %>
+                    <tr>
+                      <%cg.each do |c|%>
+                        <td class="derecha"><%= check_box_tag "channel_ids[]", c.id%><%= label_tag nil, " " + c.capt_nombre, :class=>"no_titulo" %></td>
+                      <%end%>
+                    </tr>
+                  <%end%>
+                </table>
+              </div>
+              <p class="submit">
+                <button id="registerButton" type="submit">
+                  Guardar<% i.submit "Guardar"%>
+                </button>
+              </p>
+            </fieldset>
+            <%= hidden_field_tag :construction_id, @inmueble.id %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div id="nota_obligatorios">
+      <%= label_tag nil, "Nota: Los campos marcados con el simbolo asterisco (*) son obligatorios y no pueden quedar vacios", :class=>"campo_obligatorio" %>
+    </div>
+  </body>
+</html>

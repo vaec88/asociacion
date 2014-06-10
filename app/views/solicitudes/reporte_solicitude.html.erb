@@ -1,0 +1,40 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <%#= @estado_pago %>
+      <%#= @estado_mes %>
+      <%#= @estado_anio %>
+      <div id="imagen_cabecera">
+        <!--<img width="689" height="177"<%#= image_tag "reportes/encabezado.JPG" %></img>-->
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Solicitudes desde el  <%= @fecha_desde %> hasta el  <%= @fecha_hasta %></h1>
+
+    <%if @solicitudes.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Solicitante</p></div></th>
+          <th><div class="titulos"><p>Email</p></div></th>
+          <th><div class="titulos"><p>Mensaje</p></div></th>
+          <th><div class="titulos"><p>Fecha</p></div></th>
+          <th><div class="titulos"><p>Inmueble</p></div></th>
+        </tr>
+        <% @solicitudes.each do |sol| %>
+          <tr>
+            <td><%= label_tag nil, "#{sol.sol_nombre} #{sol.sol_apellido}" %></td>
+            <td><%= label_tag nil, "#{sol.sol_email}" %></td>
+            <td><%= label_tag nil, "#{sol.sol_msg}" %></td>
+            <td><%= label_tag nil, "#{sol.sol_fecha}" %></td>
+            <td><%= label_tag nil, "#{sol.construction.operation.oper_nombre} de #{sol.construction.property.propd_nombre} en sector #{sol.construction.inm_ciudadela}, calle #{sol.construction.inm_calle}" %></td>
+          </tr>
+        <% end %>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>

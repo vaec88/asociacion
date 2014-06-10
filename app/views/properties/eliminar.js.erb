@@ -1,0 +1,18 @@
+$('#property_delete').html('<%= escape_javascript(render :partial =>'properties/eliminar')%>');
+$('#property_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#form_eliminar_property form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#property_delete").dialog("close");
+                }
+            }
+});

@@ -1,0 +1,10 @@
+<%= form_for @parroquia do |p|%>
+  <p>
+    <%= p.label :"Nombre de Parroquia" %>
+    <%= p.text_field :parr_nombre %>
+    <%= p.hidden_field :canton_id, value: @id %>
+  </p>
+  <p>
+    <%= p.submit "Guardar"%>
+  </p>
+<%end%>

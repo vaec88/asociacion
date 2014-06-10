@@ -1,0 +1,145 @@
+//alert("Formulario con errores, no se puede guardar");
+$('#new_edit_error').html('<%= escape_javascript(render :partial =>'constructions/new_edit_error')%>');
+//alert("<%#=@tipo%>");
+if ('<%= @error_operacion%>' == "")
+{ $('#constructions_new_inm_operation').hide();}
+else
+{ $('#constructions_new_inm_operation').show();
+  $('#constructions_new_inm_operation').html('<%= escape_javascript(@error_operacion)%>');
+}
+
+if ('<%= @error_propiedad%>' == "")
+{ $('#constructions_new_inm_property').hide();}
+else
+{ $('#constructions_new_inm_property').show();
+  $('#constructions_new_inm_property').html('<%= escape_javascript(@error_propiedad)%>');
+}
+
+if ('<%= @error_pago%>' == "")
+{ $('#constructions_new_inm_forma_pago').hide();}
+else
+{ $('#constructions_new_inm_forma_pago').show();
+  $('#constructions_new_inm_forma_pago').html('<%= escape_javascript(@error_pago)%>');
+}
+
+if ('<%= @error_provincia%>' == "")
+{ $('#constructions_new_inm_province').hide();}
+else
+{ $('#constructions_new_inm_province').show();
+  $('#constructions_new_inm_province').html('<%= escape_javascript(@error_provincia)%>');
+}
+
+if ('<%= @error_canton%>' == "")
+{ $('#constructions_new_inm_canton').hide();}
+else
+{ $('#constructions_new_inm_canton').show();
+  $('#constructions_new_inm_canton').html('<%= escape_javascript(@error_canton)%>');
+}
+
+if ('<%= @error_parroquia%>' == "")
+{ $('#constructions_new_inm_parish').hide();}
+else
+{ $('#constructions_new_inm_parish').show();
+  $('#constructions_new_inm_parish').html('<%= escape_javascript(@error_parroquia)%>');
+}
+
+if ('<%= @error_latitud%>' == "")
+{ $('#constructions_new_latitude').hide();}
+else
+{ $('#constructions_new_latitude').show();
+  $('#constructions_new_latitude').html('<%= escape_javascript(@error_latitud)%>');
+}
+
+if ('<%= @error_cedula%>' == "")
+{ $('#constructions_new_pers_cedula').hide();}
+else
+{ $('#constructions_new_pers_cedula').show();
+  $('#constructions_new_pers_cedula').html('<%= escape_javascript(@error_cedula)%>');
+}
+
+if ('<%= @error_apellido%>' == "")
+{ $('#constructions_new_pers_apellido').hide();}
+else
+{ $('#constructions_new_pers_apellido').show();
+  $('#constructions_new_pers_apellido').html('<%= escape_javascript(@error_apellido)%>');
+}
+
+if ('<%= @error_nombre%>' == "")
+{ $('#constructions_new_pers_nombre').hide();}
+else
+{ $('#constructions_new_pers_nombre').show();
+  $('#constructions_new_pers_nombre').html('<%= escape_javascript(@error_nombre)%>');
+}
+
+if ('<%= @error_direccion%>' == "")
+{ $('#constructions_new_pers_direccion').hide();}
+else
+{ $('#constructions_new_pers_direccion').show();
+  $('#constructions_new_pers_direccion').html('<%= escape_javascript(@error_direccion)%>');
+}
+
+if ('<%= @error_telefono2%>' == "")
+{ $('#constructions_new_pers_telefono2').hide();}
+else
+{ $('#constructions_new_pers_telefono2').show();
+  $('#constructions_new_pers_telefono2').html('<%= escape_javascript(@error_telefono2)%>');
+}
+
+if ('<%= @error_email%>' == "")
+{ $('#constructions_new_pers_email').hide();}
+else
+{ $('#constructions_new_pers_email').show();
+  $('#constructions_new_pers_email').html('<%= escape_javascript(@error_email)%>');
+}
+
+function trim(ciudadela, calle, conjunto, apellido, nombre, direccion)
+{
+var ciud = ciudadela.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var call = calle.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var conj = conjunto.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var apell = apellido.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var nomb = nombre.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var direc = direccion.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#check_inm_ciudadela").val(ciud);
+$("#check_inm_calle").val(call);
+$("#check_inm_conjunto").val(conj);
+$("#pers_propiet_apellidos").val(apell);
+$("#pers_propiet_nombres").val(nomb);
+$("#pers_propiet_direccion").val(direc);
+//alert(retorno);
+}
+
+var ciudadela = document.getElementById("check_inm_ciudadela").value
+var calle = document.getElementById("check_inm_calle").value
+var conjunto = document.getElementById("check_inm_conjunto").value
+var apellido = document.getElementById("pers_propiet_apellidos").value
+var nombre = document.getElementById("pers_propiet_nombres").value
+var direccion = document.getElementById("pers_propiet_direccion").value
+trim(ciudadela, calle, conjunto, apellido, nombre, direccion);
+
+function trim_array(){
+  var array_descrips_class = document.getElementsByClassName("piece_det_descrip");
+  var array_descrips_val = "";
+  for (var i = 0; i < array_descrips_class.length; i++){
+    array_descrips_val = array_descrips_class[i].value;
+    array_descrips_val = array_descrips_val.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+    array_descrips_class[i].value = array_descrips_val;
+  }
+  //alert(array_descrips.length);
+}
+trim_array();
+
+document.getElementById("msg_error_new_edit").style.color="#F50E0E";
+$('#new_edit_error').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Error",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#new_edit_error").dialog("close");
+                }
+            }
+});

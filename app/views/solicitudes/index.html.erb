@@ -1,0 +1,32 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Solicitante</p></div></th>
+    <th><div class="titulos"><p>Email</p></div></th>
+    <th><div class="titulos"><p>Mensaje</p></div></th>
+    <th><div class="titulos"><p>Fecha</p></div></th>
+    <th><div class="titulos"><p>Inmueble</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @solicitudes.each do |sol| %>
+      <tr>
+        <td><%= label_tag nil, "#{sol.sol_nombre} #{sol.sol_apellido}" %></td>
+        <td><%= label_tag nil, "#{sol.sol_email}" %></td>
+        <td><%= label_tag nil, "#{sol.sol_msg}" %></td>
+        <td><%= label_tag nil, "#{sol.sol_fecha}" %></td>
+        <td><%= label_tag nil, "#{sol.construction.operation.oper_nombre} de #{sol.construction.property.propd_nombre} en sector #{sol.construction.inm_ciudadela}, calle #{sol.construction.inm_calle}" %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>sol.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_solicitude_formulario", :id=>1}, :remote=>true)%>
+
+<div id="solicitude_delete">
+
+</div>
+
+<div id="usuario_reporte_solicitudes">
+
+</div>

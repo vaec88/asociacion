@@ -1,0 +1,18 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_rebate">
+    <%= form_for @depreciacion, :remote=>true  do |d|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Metodo de Depreciacion:" %></td>
+          <td><%= d.text_field :met_nombre, :id=>"rebates_edit_met_nombre", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>
+</div>

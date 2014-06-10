@@ -1,0 +1,23 @@
+$('#piece_new').html('<%= escape_javascript(render :partial =>'pieces/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@parte.part_nombre}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#piece_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#piece_new").dialog("close");
+                    document.getElementById("pieces_index_part_nombre").focus();
+                    $('#pieces_index_part_nombre').val("");
+                }
+            }
+});

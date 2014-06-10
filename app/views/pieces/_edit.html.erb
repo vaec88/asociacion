@@ -1,0 +1,18 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_piece">
+    <%= form_for @parte, :remote=>true do |p|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Nombre de la parte:" %></td>
+          <td><%= p.text_field :part_nombre, :id=>"pieces_edit_part_nombre", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>
+</div>

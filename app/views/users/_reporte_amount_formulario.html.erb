@@ -1,0 +1,21 @@
+<div id="formulario">
+  <div id="form_reporte_usuario">
+    <%#= form_tag reporte_amount_path, :target=>"DoSubmit", :onsubmit=>"DoSubmit = window.open('about:blank','DoSubmit','width=400,height=350,resizeable=no,scrollbars');"  do%>
+    <%= form_tag reporte_amount_path, :target=>"_blank"  do%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Estado: "%></td>
+          <td class="select_edit"><%= select :estado_pago, nil, options_for_select(@estados_pago), { :include_blank => false }, {:style => "width:150px", :id=>"select_estado_pago"} %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Mes: "%></td>
+          <td class="select_edit"><%= select :estado_mes, nil, options_for_select(@meses), { :include_blank => false }, {:style => "width:150px", :id=>"select_estado_mes"} %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Año: "%></td>
+          <td class="select_edit"><%= select :estado_anio, nil, options_for_select(@anios), { :include_blank => false }, {:style => "width:150px", :id=>"select_estado_anio"} %></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>
+</div>

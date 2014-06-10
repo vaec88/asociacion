@@ -1,0 +1,15 @@
+<%= form_for @honorario do |h|%>
+  <p>
+    <%= h.label "Cantidad de Abono: " %>
+    <%= h.text_field :hon_cantidad %>
+  </p>
+  <p>
+    <%= h.label "Fecha de Transaccion: " %>
+    <%= h.text_field :hon_fecha %>
+  </p>
+  <%= hidden_field_tag :construction_id, @inmueble.id %>
+  <%= @inmueble.id %>
+  <p>
+    <%= h.submit "Guardar"%>
+  </p>
+<%end%>

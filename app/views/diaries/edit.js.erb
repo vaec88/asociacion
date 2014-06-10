@@ -1,0 +1,24 @@
+$('#diary_edit').html('<%= escape_javascript(render :partial =>'diaries/edit')%>');
+$('#diary_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_diary form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#diary_edit").dialog("close");
+                }
+            }
+});
+
+/*$('#diary_edit').keypress(function(e) {
+    if (e.keyCode == $.ui.keyCode.ENTER) {
+          $("#form_edit_diary form").submit();
+    }
+});*/

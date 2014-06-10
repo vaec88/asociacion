@@ -1,0 +1,23 @@
+$('#province_new').html('<%= escape_javascript(render :partial =>'provinces/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@provincia.prov_nombre}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#province_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#province_new").dialog("close");
+                    document.getElementById("provinces_index_prov_nombre").focus();
+                    $('#provinces_index_prov_nombre').val("");
+                }
+            }
+});

@@ -1,0 +1,25 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_meeting">
+  <%= form_for @reunion, :remote=>true do |r|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Actores: " %></td>
+          <td class="label_edit"><%= r.text_field :reu_actores, :id=>"meetings_edit_reu_actores", :autofocus => true, :class=>"textarea" %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Detalle: " %></td>
+          <td class="label_edit"><%= r.text_area :reu_detalle, :id=>"meetings_edit_reu_detalle", :class=>"textarea" %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= r.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

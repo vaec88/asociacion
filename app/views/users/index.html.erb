@@ -1,0 +1,106 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= form_tag activar_cuentas_path, :id=>"link_activar_cuentas", :method=>"get" do%>
+<h1>CORREDORES DE BIENES RAICES</h1>
+
+<div id="tabla">
+<table class="bordered">
+  <tr>
+    <th><div class="titulos"><p>Foto</p></div></th>
+    <th><div class="titulos"><p>Estado</p></div></th>
+    <th><div class="titulos"><p>Cedula</p></div></th>
+    <th><div class="titulos"><p>Apellidos</p></div></th>
+    <th><div class="titulos"><p>Nombres</p></div></th>
+    <th><div class="titulos"><p>Email</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+  </tr>
+  <%user_id = nil%>
+  <% for persona in @personas %>
+    <tr>
+      <% persona.users.uniq.each do |pu| %>
+        <td><img alt="" width="40" height="40" class="perfil_user" <%= image_tag pu.usu_foto.url(:small) %></img></td>
+
+        <%Role.where(:id => current_rol).each do |rol| %>
+          <% if rol.rol_nombre == "Administrador" %>
+            <td>
+              <%#= label_tag nil, pu.usu_estado %>
+              <!-- PARA VERIFICAR SI LA LOS PAGOS ESTAN AL DIA Y LA CUENTA ESTA ACTIVA-->
+              <%if (pu.usu_estado=="A" and persona.pers_estado == "A")%>
+                <img alt="" width="8" height="8" class="centrar" <%= image_tag "contenido/online.png" %></img>
+              <%else%>
+                <img alt="" width="8" height="8" class="centrar" <%= image_tag "contenido/offline.png" %></img>
+              <%end%>
+              <!-- PARA VERIFICAR SI LA CUENTA ESTA ACTIVA (CUANDO UN USUARIO SE REGISTRA)-->
+              <%if persona.pers_estado == "A"%>
+                <%= check_box_tag "cuentas_activas[]", persona.id, true%>
+              <%else%>
+                <%= check_box_tag "cuentas_activas[]", persona.id, false%>
+              <%end%>
+            </td>
+          <%else%>
+            <% if rol.rol_nombre == "Tesorero" %>
+              <td>
+                <%#= label_tag nil, pu.usu_estado %>
+                <!-- PARA VERIFICAR SI LA LOS PAGOS ESTAN AL DIA Y LA CUENTA ESTA ACTIVA-->
+                <%if (pu.usu_estado=="A" and persona.pers_estado == "A")%>
+                  <img alt="" width="8" height="8" class="centrar2" <%= image_tag "contenido/online.png" %></img>
+                <%else%>
+                  <img alt="" width="8" height="8" class="centrar2" <%= image_tag "contenido/offline.png" %></img>
+                <%end%>
+              </td>
+            <%end%>
+          <%end%>
+        <%end%>
+
+
+
+
+
+
+        
+        <%user_id = pu.id%>
+      <%end%>
+      <td><%= label_tag nil, persona.pers_cedula %></td>
+      <td><%= label_tag nil, persona.pers_apellido %></td>
+      <td><%= label_tag nil, persona.pers_nombre %></td>
+      <td><%= label_tag nil, persona.pers_email %></td>
+
+      <%Role.where(:id => current_rol).each do |rol| %>
+        <% if rol.rol_nombre == "Administrador" %>
+          <td><%#= label_tag nil, (link_to (image_tag "contenido/calculator16.png"), index_amount_path(:usuario_id => user_id, :persona_id=>persona.id)) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :usuario_id=>user_id, :id=>persona.id}, :remote=>true)%></td>
+          <%#= label_tag nil, (link_to (image_tag "contenido/edit16.png"), edit_usuarios_path(:usuario_id => user_id, :persona_id => persona.id)) %>
+          <%#= link_to "Editar", edit_usuarios_path(:usuario_id => user_id, :persona_id => persona.id)%>
+          <%#= link_to "Eliminar" %>
+        <%else%>
+          <% if rol.rol_nombre == "Tesorero" %>
+            <td><%= label_tag nil, (link_to (image_tag "contenido/calculator16.png"), index_amount_path(:usuario_id => user_id, :persona_id=>persona.id)) %></td>
+            <%#= link_to (label_tag nil, "Pagos"), index_amount_path(:usuario_id => user_id) %>
+          <%end%>
+        <%end%>
+      <%end%>
+      
+      <%#= link_to (label_tag nil, "Pagos"), index_amount_path(:usuario_id => user_id) %>
+    </tr>
+  <% end %>
+</table>
+</div>
+<%Role.where(:id => current_rol).each do |rol| %>
+  <% if rol.rol_nombre == "Administrador" %>
+    <%= label_tag nil, (link_to (image_tag("contenido/add.png")+" "+' Agregar nuevo usuario'), sing_up_path)%> - <%= label_tag nil, (link_to_function (image_tag("contenido/accept.png")+" "+' Activar Cuentas'), '$("#link_activar_cuentas").submit();' )%> - <%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_amount_formulario", :id=>user_id}, :remote=>true)%>
+  <%else%>
+    <% if rol.rol_nombre == "Tesorero" %>
+      <%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_amount_formulario", :id=>user_id}, :remote=>true)%>
+    <%end%>
+  <%end%>
+<%end%>
+<div id="usuario_delete">
+
+</div>
+<div id="usuario_no_delete">
+
+</div>
+<div id="usuario_reporte_amount">
+
+</div>
+<%end%>

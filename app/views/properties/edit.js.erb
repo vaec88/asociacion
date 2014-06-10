@@ -1,0 +1,18 @@
+$('#property_edit').html('<%= escape_javascript(render :partial =>'properties/edit')%>');
+$('#property_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_property form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#property_edit").dialog("close");
+                }
+            }
+});

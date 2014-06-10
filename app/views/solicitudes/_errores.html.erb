@@ -1,0 +1,11 @@
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    $(".mensaje").hide();
+  });
+</script>
+<div id="formulario">
+  <%= label_tag nil, "", :id=>"contact_error_nombre", :class=>"mensaje"%><br/>
+  <%= label_tag nil, "", :id=>"contact_error_apellido", :class=>"mensaje"%><br/>
+  <%= label_tag nil, "", :id=>"contact_error_email", :class=>"mensaje"%><br/>
+  <%= label_tag nil, "", :id=>"contact_error_msg", :class=>"mensaje"%><br/>
+</div>

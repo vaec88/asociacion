@@ -1,0 +1,9 @@
+<%= form_for @parte do |p|%>
+  <p>
+    <%= p.label :"Nombre de la parte" %>
+    <%= p.text_field :part_nombre %>
+  </p>
+  <p>
+    <%= p.submit "Guardar"%>
+  </p>
+<%end%>

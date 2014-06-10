@@ -1,0 +1,59 @@
+<head>
+  <%#= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css"%>
+  <!--<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>-->
+  <%#= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css"%>
+  <%#= stylesheet_link_tag "jquery-ui.css"%>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+  <%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+  <%= javascript_include_tag "validaciones_diaries_new.js"%>
+  <script language="JavaScript" type="text/javascript" src="/javascripts/application.js"></script>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#diaries_index_age_hora").keypress(isNumberKey);
+    });
+  </script>
+</head>
+<div id="tabla">
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Actividad</p></div></th>
+      <th><div class="titulos"><p>Fecha (aaaa-mm-dd)</p></div></th>
+      <th><div class="titulos"><p>Hora</p></div></th>
+      <th><div class="titulos"><p>Direccion</p></div></th>
+      <th><div class="titulos"><p>Acciones</p></div></th>
+    </tr>
+    <%@actividades.each do |a| %>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, a.age_actividad, :class=>"age_actividad" %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, a.age_fecha %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, a.age_hora.strftime('%H:%M') %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, a.age_direccion %></div></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => a.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>a.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+
+    <%= form_for @actividad, :remote=>true do |a|%>
+      <tr>
+        <%#= a.text_area :age_actividad, :cols => 30, :rows => 5 %>
+        <td><%= a.text_field :age_actividad, :id=>"diaries_index_age_actividad", :autofocus => true, :class=>"width_auto"%></td>
+        <td><%= a.text_field :age_fecha, :value=>@fecha, :id => "diary_age_fecha", :readonly=>true, :style=>"width:150px"%></td>
+        <%#= a.label "Fecha: " %><%#= a.text_field :age_fecha, :class => "diary_age_fecha", :id => "diary_age_fecha", :style => "width:100px"%>
+        <td><%= a.text_field :age_hora, :id=>"diaries_index_age_hora", :style=>"width:50px"%></td>
+        <td><%= a.text_field :age_direccion, :id=>"diaries_index_age_direccion", :style=>"width:200px" %></td>
+        <%= hidden_field_tag :usuario_id, @usuario.id%>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="diary_new">
+
+</div>
+<div id="diary_edit">
+
+</div>
+<div id="diary_delete">
+
+</div>

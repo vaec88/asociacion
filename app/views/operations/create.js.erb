@@ -1,0 +1,23 @@
+$('#operation_new').html('<%= escape_javascript(render :partial =>'operations/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@operacion.oper_nombre}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#operation_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#operation_new").dialog("close");
+                    document.getElementById("operations_index_oper_nombre").focus();
+                    $('#operations_index_oper_nombre').val("");
+                }
+            }
+});

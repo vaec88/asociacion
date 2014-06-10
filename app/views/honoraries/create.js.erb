@@ -1,0 +1,31 @@
+$('#honorary_new').html('<%= escape_javascript(render :partial =>'honoraries/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @hon_fecha%>' == "blank")
+  { document.getElementById("honoraries_index_hon_fecha").style.border="1px solid #dc143c";
+    document.getElementById("honoraries_index_hon_fecha").focus();
+  }
+  else
+  { document.getElementById("honoraries_index_hon_fecha").style.border="1px solid #ddd";}
+  if ('<%= @hon_cantidad%>' == "blank")
+  { document.getElementById("honoraries_index_hon_cantidad").style.border="1px solid #dc143c";
+    document.getElementById("honoraries_index_hon_cantidad").focus();
+  }
+  else
+  { document.getElementById("honoraries_index_hon_cantidad").style.border="1px solid #ddd";}
+}
+
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#honorary_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#honorary_new").dialog("close");
+                }
+            }
+});

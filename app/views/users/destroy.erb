@@ -1,0 +1,34 @@
+PERSONAS<br/>
+<%@personas.each do |p| %>
+  <%= p.id %><br/>
+<%end%>
+INMUBLES<br/>
+<%@inmuebles.each do |i| %>
+  <%= i.id %><br/>
+<%end%>
+PERSONAS_DETALLE<br/>
+<%@personas_detalle.each do |pd| %>
+  <%= pd.persona_id %>
+  <%= pd.construction_id %><br/>
+<%end%>
+
+CONSTRUCION_PARAMETER<br/>
+<%@inm_const_param.each do |icp| %>
+  <%= icp.construction_id %><br/>
+<%end%>
+CONSTRUCION_STATE<br/>
+<%@inm_const_state.each do |ics| %>
+  <%= ics.construction_id %><br/>
+<%end%>
+CONSTRUCION_PRICE<br/>
+<%@inm_const_price.each do |pd| %>
+  <%= pd.construction_id %><br/>
+<%end%>
+CONSTRUCION_PIECE<br/>
+<%@inm_const_piece.each do |pd| %>
+  <%= pd.construction_id %><br/>
+<%end%>
+CONSTRUCION_CHANNEL<br/>
+<%@inm_const_channel.each do |pd| %>
+  <%= pd.construction_id %><br/>
+<%end%>

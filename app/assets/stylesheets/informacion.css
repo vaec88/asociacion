@@ -1,0 +1,35 @@
+.texto p
+{   /*margin: 0px 35px;*/
+	margin-left:45px;
+	margin-right:25px;
+    text-align: justify;
+    font: normal 16px Calibri, "Times New Roman";
+    line-height: 25px;
+    /*font-size: 15px;
+    font-family: Calibri, "Times New Roman";*/
+}
+.texto h1
+{   text-align: center;
+    font: normal 25px Calibri, "Times New Roman";
+    line-height: 25px;
+	margin-top:10px;
+}
+.texto
+{   /*width: 600px;*/
+	width:65%;
+    height: 200px;
+    float:left;
+    background-color: #f0ffff;
+}
+.imagen
+{   /*width: 298px;*/
+	width:35%;
+    height: 200px;
+    float: left;
+    margin: 0px;
+    background-color: #f5f5dc;
+}
+.imagen img
+{   margin: 10px 0px;
+	margin-left: 45px;
+}

@@ -1,0 +1,14 @@
+$('#operation_no_delete').html('<%= escape_javascript(render :partial =>'operations/no_eliminar')%>');
+$('#operation_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#operation_no_delete").dialog("close");
+                }
+            }
+});

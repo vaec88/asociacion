@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <%#= @estado_pago %>
+      <%#= @estado_mes %>
+      <%#= @estado_anio %>
+      <div id="imagen_cabecera">
+        <!--<img width="689" height="177"<%#= image_tag "reportes/encabezado.JPG" %></img>-->
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Honorarios desde el  <%= @fecha_desde %> hasta el  <%= @fecha_hasta %></h1>
+
+    <%if @inmuebles_current.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Inmueble</p></div></th>
+          <th><div class="titulos"><p>Valor de Mercado</p></div></th>
+          <th><div class="titulos"><p>Honorarios</p></div></th>
+          <th><div class="titulos"><p>Pagado por</p></div></th>
+          <th><div class="titulos"><p>Fecha de Pago</p></div></th>
+        </tr>
+        <% @inmuebles_current.each do |inm| %>
+          <tr>
+            <td><%= label_tag nil, "#{inm.inm_ciudadela} - #{inm.inm_calle}" %></td>
+            <td><%= label_tag nil, "$ #{inm.inm_val_merc}" %></td>
+            <td><%= label_tag nil, "$ #{inm.inm_val_honor}" %></td>
+            <%propietario = inm.personas.where(:personas_constructions_roles=>{:role_id=>@propietario.id}).first%>
+            <td><%= label_tag nil, "#{propietario.pers_apellido} #{propietario.pers_nombre}" %></td>
+            <td><%= label_tag nil, "#{inm.honoraries.last.hon_fecha}" %></td>
+          </tr>
+        <% end %>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>

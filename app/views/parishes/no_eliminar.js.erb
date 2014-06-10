@@ -1,0 +1,14 @@
+$('#parish_no_delete').html('<%= escape_javascript(render :partial =>'parishes/no_eliminar')%>');
+$('#parish_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#parish_no_delete").dialog("close");
+                }
+            }
+});

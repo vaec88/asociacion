@@ -1,0 +1,13 @@
+<%= form_for @depreciacion do |d|%>
+  <p>
+    <%= d.label :"Metodo de Depreciacion" %>
+    <%= d.text_field :met_nombre %>
+  </p>
+  <p>
+    <%= d.label :"Nivel del metodo" %>
+    <%= d.text_field :met_nivel %>
+  </p>
+  <p>
+    <%= d.submit "Guardar"%>
+  </p>
+<%end%>

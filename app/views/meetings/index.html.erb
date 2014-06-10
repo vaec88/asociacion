@@ -1,0 +1,59 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Actores</p></div></th>
+      <th><div class="titulos"><p>Detalle</p></div></th>
+      <th><div class="titulos"><p>Fecha - Hora</p></div></th>
+      <th><div class="titulos"><p>Acciones</p></div></th>
+    </tr>
+    <% @reuniones.each do |r| %>
+      <tr>
+        <td><%= label_tag nil, r.reu_actores %></td>
+        <td><%= label_tag nil, r.reu_detalle %></td>
+        <td><%= label_tag nil, r.reu_fecha_hora.strftime('%d/%m/%Y %H:%M:%S') %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => r.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>r.id}, :remote=>true)%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+
+<%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_meeting", :id=>@inmueble.id}, :target=>"_blank")%>
+<div id="usuario_reporte_meetings">
+
+</div>
+
+<%= form_for @reunion, :remote=>true do |r|%>
+
+  <div id="formulario">
+    <div id="tabla">
+    <table class="bordered">
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, "Actores: " , :class=>"negrita"%></div></td>
+        <td><%= r.text_field :reu_actores, :id=>"meetings_index_reu_actores", :autofocus => true, :class=>"textarea" %></td>
+      </tr>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, "Detalle: " , :class=>"negrita"%></div></td>
+        <td><%= r.text_area :reu_detalle, :id=>"meetings_index_reu_detalle", :class=>"textarea" %></td>
+      </tr>
+      <%= hidden_field_tag :construction_id, @inmueble.id%>
+      <tr>
+        <td colspan="2" class="boton"><%= r.submit "Guardar"%></td>
+      </tr>
+    </table>
+  </div>
+  </div>
+<%end%>
+
+<div id="meeting_new">
+
+</div>
+<div id="meeting_edit">
+
+</div>
+<div id="meeting_delete">
+
+</div>
+<%#= link_to "Agregar reunion", new_meeting_path(:construction_id => @inmueble.id) %>

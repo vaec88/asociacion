@@ -1,0 +1,13 @@
+<%= form_for @param_val do |pv|%>
+  <p>
+    <%= pv.label :"Descripcion de Parametro" %>
+    <%= pv.text_field :param_val_descrip %>
+  </p>
+  <p>
+    <%= pv.label :"Valor de parametro" %>
+    <%= pv.text_field :param_val_unit %>
+  </p>
+  <p>
+    <%= pv.submit "Guardar"%>
+  </p>
+<%end%>

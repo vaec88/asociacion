@@ -1,0 +1,258 @@
+<html>
+  <head>
+    <script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+    <script language="JavaScript" type="text/javascript" src="../javascripts/sliding.form.js"></script>
+    <%= javascript_include_tag "validaciones_constructions_new.js.erb"%>
+    <script>
+      $(document).ready(function() {
+        /*VALIDACION PARA LA CEDULA*/
+        $("#pers_propiet_cedula").keypress(isNumberKey);
+        checkCedula("<%= update_propietario_path %>");
+        /*CAMPOS DE SOLO LETRAS*/
+        $("#pers_propiet_apellidos").keypress(isLetterKey);
+        $("#pers_propiet_nombres").keypress(isLetterKey);
+        /*CAMPOS DE SOLO NUMEROS*/
+        $("#pers_propiet_telefono1").keypress(isNumberKey);
+        $("#pers_propiet_telefono2").keypress(isNumberKey);
+        /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+        $("#pers_propiet_apellidos").change(checkApellido);
+        $("#pers_propiet_nombres").change(checkNombre);
+        $("#pers_propiet_direccion").change(checkDireccion);
+        $("#pers_propiet_telefono2").change(checkTelefono2);
+        /*VALIDACION DE EMAIL*/checkEmail("<%= constructions_pers_email_check_path %>");
+        /*VALIDACION PARA NO INGRESAR ESPACIOS EN BLANCO*/
+        $("#pers_propiet_email").keypress(isBlankKey);
+
+
+
+        $(".constructions_errores").hide();
+        $(".piece_det_numero").keypress(isNumberKey);
+        $("#check_inm_vivienda").keypress(isNumberKey);
+      //initialize();
+        //var mi_latitud = document.getElementById("lat");
+        //alert(document.getElementById("lat").textContent);
+        $('#province_select').change(function() {
+          var elemento = document.getElementById("province_select");
+          var indexNumber = elemento.options[elemento.selectedIndex].index;
+          //alert(document.getElementById("province_select").options[document.getElementById("province_select").selectedIndex].index);
+          $.ajax({
+          url: "<%= update_cantons_path %>",
+          data: {
+            province_id : $('#province_select').val(),
+            index_number : indexNumber
+          },
+          dataType: "script"
+          });
+        });
+        $('#canton_select').change(function() {
+          var elemento = document.getElementById("canton_select");
+          var indexNumber = elemento.options[elemento.selectedIndex].index;
+          $.ajax({
+          url: "<%= update_parishes_path %>",
+          data: {
+            canton_id : $('#canton_select').val(),
+            index_number : indexNumber
+          },
+          dataType: "script"
+          });
+        });
+
+       /* $('#pers_propiet_cedula').change(function(event) {
+            $.ajax({
+              url: "<%#= update_propietario_path %>",
+              data: {
+                numero_cedula : $(this).val()
+              },
+              dataType: "script"
+            });
+          });*/
+
+      });
+    </script>
+  </head>
+  <body>
+    <div id="content">
+      <div id="wrapper">
+        <div id="steps">
+          <%= form_for @inmueble, :remote=>true do |i|%>
+            <fieldset class="step">
+              <legend>Información</legend>
+              <p>
+                <%= label_tag nil, "Ciudadela" %>
+                <%= i.text_field :inm_ciudadela, :id=>"check_inm_ciudadela",:autocomplete => :off, :autofocus=>true%>
+              </p>
+              <p>
+                <%= label_tag nil, "Calle" %>
+                <%= i.text_field :inm_calle, :id=>"check_inm_calle",:autocomplete => :off %>
+              </p>
+              <p>
+                <%= label_tag nil, "Conjunto" %>
+                <%= i.text_field :inm_conjunto, :id=>"check_inm_conjunto",:autocomplete => :off %>
+              </p>
+              <p>
+                <%= label_tag nil, "Numero de Vivienda"%>
+                <%= i.text_field :inm_vivienda, :id=>"check_inm_vivienda",:autocomplete => :off  %>
+              </p>
+              <p>
+                <%= label_tag nil, "Unidad de Medida" %>
+                <%= i.select :inm_unid_med, options_for_select(@medidas), { :prompt => "Seleccione una Medida" }, {:style => "width:212px", :id=>"check_inm_unid_med"} %>
+                <%#= i.text_field :inm_unid_med %>
+              </p>
+              <p>
+                <%= label_tag nil, "Tipo de Operacion" %>
+                <%= i.select :operation_id, options_for_select(@operacion.collect{ |o| [o.oper_nombre, o.id] }), { :prompt => "Seleccione una Operacion" }, {:style => "width:212px", :id=>"check_inm_operation"} %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_operation", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Tipo de Propiedad" %>
+                <%= i.select :property_id, options_for_select(@propiedad.collect{ |p| [p.propd_nombre, p.id] }), { :prompt => "Seleccione una Propiedad" }, {:style => "width:212px", :id=>"check_inm_property"} %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_property", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Forma de Pago" %>
+                <%= i.select :inm_forma_pago, options_for_select(@pagos), { :prompt => "Seleccione un Pago" }, {:style => "width:212px", :id=>"check_inm_forma_pago"} %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_forma_pago", :class=>"constructions_errores" %>
+              </p>
+            </fieldset>
+            <fieldset class="step">
+              <legend>Ubicación</legend>
+              <p>
+                <%= label_tag nil, "Provincia" %>
+                <%= collection_select(nil, :province_id, @provincia, :id, :prov_nombre, {:prompt => "Seleccione una Provincia"}, {:id => 'province_select'}) %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_province", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Canton" %>
+                <%= collection_select(nil, :canton_id, @canton, :id, :cant_nombre, {:prompt => "Seleccione un Canton"}, {:id => 'canton_select'}) %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_canton", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Parroquia" %>
+                <%= i.collection_select(:parish_id, @parroquia, :id, :parr_nombre, {:prompt => "Seleccione una Parroquia"}, {:id => 'parish_select'}) %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                <%= label_tag nil, "", :id=>"constructions_new_inm_parish", :class=>"constructions_errores" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Latitud" %>
+                <%= i.text_field :latitude, :id=>"lat2", :readonly => true%>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Longitud" %>
+                <%= i.text_field :longitude, :id=>"lng2", :readonly => true %>
+                <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+              </p>
+              <p>
+                <%= label_tag nil, "Coordenadas" %>
+                <%= label_tag nil, (link_to "Ir al Mapa", coordenadas_construction_path, :remote=>true), :id=>"ir_al_mapa", :class=>"negrita" %>
+                <%= label_tag nil, "", :id=>"constructions_new_latitude", :class=>"constructions_errores" %>
+              </p>
+              
+              <br/>
+            </fieldset>
+            <fieldset class="step">
+              <legend>Divisiones</legend>
+              <div id="divisiones_pieces">
+                <table>
+                  <tr>
+                    <td class="centrar"><%= label_tag nil, "Nombre", :class=>"titulo"%></td>
+                    <td class="centrar"><%= label_tag nil, "Cantidad", :class=>"titulo" %></td>
+                    <td class="centrar"><%= label_tag nil, "Descripcion", :class=>"titulo" %></td>
+                  </tr>
+                  <% @partes.each do |p| %>
+                    <tr>
+                      <td class="derecha"><%= check_box_tag "piece_ids[]", p.id%><%= label_tag nil, " " + p.part_nombre, :class=>"no_titulo" %></td>
+                      <td><%= text_field_tag "det_numero_"+"#{p.id}", nil, :class => "piece_det_numero", :id => "", :style => "width:50px" %></td>
+                      <td><%= text_field_tag "det_descrip_"+"#{p.id}", nil, :class => "piece_det_descrip", :id => "", :style => "width:200px" %></td>
+                    </tr>
+                  <%end%>
+                  <!--<tr>
+                    <td><%#= i.submit "Guardar"%></td>
+                  </tr>-->
+                </table>
+              </div>
+            </fieldset>
+            <fieldset class="step">
+              <legend>Propietario</legend>
+                <%= fields_for @persona do |i| %>
+                  <p>
+                    <%= label_tag nil, "Cedula" %>
+                    <%= i.text_field :pers_cedula, :id => "pers_propiet_cedula" %>
+                    <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_cedula", :class=>"constructions_errores" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Apellidos" %>
+                    <%= i.text_field :pers_apellido, :id => "pers_propiet_apellidos" %>
+                    <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_apellido", :class=>"constructions_errores" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Nombres" %>
+                    <%= i.text_field :pers_nombre, :id => "pers_propiet_nombres" %>
+                    <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_nombre", :class=>"constructions_errores" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Direccion"%>
+                    <%= i.text_field :pers_direccion, :id => "pers_propiet_direccion" %>
+                    <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_direccion", :class=>"constructions_errores" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Telefono Convencional" %>
+                    <%= i.text_field :pers_telefono1, :id => "pers_propiet_telefono1" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Telefono Celular" %>
+                    <%= i.text_field :pers_telefono2, :id => "pers_propiet_telefono2" %>
+                    <%= label_tag nil, "*", :class=>"campo_obligatorio" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_telefono2", :class=>"constructions_errores" %>
+                  </p>
+                  <p>
+                    <%= label_tag nil, "Correo Electronico" %>
+                    <%= i.text_field :pers_email, :id => "pers_propiet_email" %>
+                    <%= label_tag nil, "", :id=>"constructions_new_pers_email", :class=>"constructions_errores" %>
+                  </p>
+                  
+                  <%= hidden_field_tag :propiet_existe, "no", :id => "pers_propiet_existe" %>
+                  
+                <%end%>
+                <p class="submit">
+                  <button id="registerButton" type="submit">
+                    Guardar<% i.submit "Guardar"%>
+                  </button>
+                </p>
+            </fieldset>            
+          <%end%>
+        </div>
+
+        <div id="navigation" style="display:none;">
+          <ul>
+            <li class="selected"><a href="#">Información</a></li>
+            <li><a href="#">Ubicación</a></li>
+            <li><a href="#">Divisiones</a></li>
+            <li><a href="#">Propietario</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="new_edit_error">
+
+    </div>
+    <div id="nota_obligatorios">
+      <%= label_tag nil, "Nota: Los campos marcados con el simbolo asterisco (*) son obligatorios y no pueden quedar vacios", :class=>"campo_obligatorio" %>
+    </div>
+  </body>
+</html>
+    
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<div id="mapa_coordenadas">
+
+</div>

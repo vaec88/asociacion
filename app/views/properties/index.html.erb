@@ -1,0 +1,34 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Tipo de Propiedad</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @propiedades.each do |p| %>
+      <tr>
+        <td><%= label_tag nil, p.propd_nombre %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => p.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>p.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+    <%= form_for @propiedad, :remote=>true do |p|%>
+      <tr>
+        <td><%= p.text_field :propd_nombre, :id=>"properties_index_propd_nombre", :autofocus => true %></td>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="property_new">
+
+</div>
+<div id="property_edit">
+
+</div>
+<div id="property_delete">
+
+</div>
+<div id="property_no_delete">
+
+</div>
+<%#= link_to 'Agregar nuevo tipo de propiedad', new_property_path %>

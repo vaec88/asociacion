@@ -1,0 +1,19 @@
+//alert('hola mundo');
+$('#price_edit').html('<%= escape_javascript(render :partial =>'prices/edit')%>');
+$('#price_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_price form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#price_edit").dialog("close");
+                }
+            }
+});

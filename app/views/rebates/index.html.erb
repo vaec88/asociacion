@@ -1,0 +1,35 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Metodo de Depreciacion</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @depreciaciones.each do |d| %>
+      <tr>
+        <td><%= label_tag nil, (link_to '+', index_state_path(:rebate_id => d.id))%><%= label_tag nil, d.met_nombre %></td>
+        <%#= d.met_nivel %>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => d.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action => "eliminar", :id => d.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+    <%= form_for @depreciacion, :remote=>true do |d|%>
+      <tr>
+        <td><%= d.text_field :met_nombre, :id=>"rebates_index_met_nombre", :autofocus => true %></td>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="rebate_new">
+
+</div>
+<div id="rebate_edit">
+
+</div>
+<div id="rebate_delete">
+
+</div>
+<div id="rebate_no_delete">
+
+</div>
+<%#= link_to 'Agregar nuevo metodo de depreciacion', new_rebate_path %>

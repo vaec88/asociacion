@@ -1,0 +1,14 @@
+$('#image_error').html('<%= escape_javascript(render :partial =>'images/error')%>');
+$('#image_error').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Error",
+  modal: true,
+  buttons: {
+                "Aceptar" : function()
+                {
+                    $("#image_error").dialog("close");
+                }
+            }
+});

@@ -1,0 +1,26 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Inmueble</p></div></th>
+    <th><div class="titulos"><p>Valor de Mercado</p></div></th>
+    <th><div class="titulos"><p>Honorarios</p></div></th>
+    <th><div class="titulos"><p>Pagado por</p></div></th>
+    <th><div class="titulos"><p>Fecha de Pago</p></div></th>
+    <% @inmuebles_current.each do |inm| %>
+      <tr>
+        <td><%= label_tag nil, "#{inm.inm_ciudadela} - #{inm.inm_calle}" %></td>
+        <td><%= label_tag nil, "$ #{inm.inm_val_merc}" %></td>
+        <td><%= label_tag nil, "$ #{inm.inm_val_honor}" %></td>
+        <%propietario = inm.personas.where(:personas_constructions_roles=>{:role_id=>@propietario.id}).first%>
+        <td><%= label_tag nil, "#{propietario.pers_apellido} #{propietario.pers_nombre}" %></td>
+        <td><%= label_tag nil, "#{inm.honoraries.last.hon_fecha}" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_honorary_formulario", :id=>1}, :remote=>true)%>
+<div id="usuario_reporte_honoraies">
+
+</div>

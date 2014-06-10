@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_parish">
+    <%= form_tag destroy_parish_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar '#{@parroquia.parr_nombre}'"%>
+      <%= hidden_field_tag :id, @parroquia.id  %>
+    <%end%>
+  </div>
+</div>

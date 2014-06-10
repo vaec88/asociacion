@@ -1,0 +1,2 @@
+class ConstructionsStatesController < ApplicationController
+end

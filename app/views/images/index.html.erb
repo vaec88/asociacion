@@ -1,0 +1,86 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+
+<%= stylesheet_link_tag "colorbox.css", :media => "screen" %>
+<%= javascript_include_tag "jquery.colorbox.js"%>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "images.css", :media => "screen" %>
+<script>
+  $(document).ready(function(){
+  //Examples of how to assign the Colorbox event to elements
+  $(".group1").colorbox({rel:'group1'});
+  $(".group2").colorbox({rel:'group2', transition:"fade"});
+  $(".group3").colorbox({rel:'group3', transition:"none", width:"75%", height:"75%"});
+  $(".group4").colorbox({rel:'group4', slideshow:true});
+  $(".ajax").colorbox();
+  $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
+  $(".vimeo").colorbox({iframe:true, innerWidth:500, innerHeight:409});
+  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+  $(".inline").colorbox({inline:true, width:"50%"});
+  $(".callbacks").colorbox({
+    onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+    onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+    onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+    onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+    onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+  });
+
+  $('.non-retina').colorbox({rel:'group5', transition:'none'})
+  $('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+
+  //Example of preserving a JavaScript event for inline calls.
+  $("#click").click(function(){
+    $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+    return false;
+    });
+  });
+</script>
+<div id="formulario">
+  <div id="tabla">
+    <%= label_tag nil, "Imagenes del inmeble ubicado en " + @inmueble.inm_ciudadela%>
+    <%#= render "todas" %>
+    <div id="galeria_imgs">
+      <% @inmueble.images.in_groups_of(4, false).each do |iig| %>
+        <table>
+          <tr>
+          <% iig.each do |img|%>
+            <td>
+              <div class="show-image">
+              <a class="group2" <%= link_to (image_tag img.img_path.url(:thumb), :width => 200, :height => 200),(asset_path img.img_path.url(:original))%></a>
+              <%if current_user.nil? == false%>
+              <%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>img.id}, :remote=>true)%>
+                <%#= link_to "Eliminar", img, :method => "delete", :confirm => "¿Esta seguro?"%>
+              <%end%>
+              </div>
+            </td>
+          <%end%>
+          </tr>
+        </table>
+
+      <%end%>
+    </div>
+
+
+    <%if current_user.nil? == false%>
+      <%= form_for @image, :html => {:multipart => true}, :remote=>true do |i|%>
+        <table class="bordered">
+          <tr>
+            <td><div class="etiquetas_left"><%= label_tag nil, "Cargar Imagen: " , :class=>"negrita"%></div></td>
+            <td><%= i.file_field :img_path %></td>
+          </tr>
+          <%= hidden_field_tag :construction_id, @inmueble.id %>
+          <tr>
+            <td colspan="2" class="boton"><%= i.submit "Guardar"%></td>
+          </tr>
+        </table>
+      <%end%>
+    <%end%>
+
+  </div>
+</div>
+<div id="image_delete">
+
+</div>
+<div id="image_error">
+
+</div>

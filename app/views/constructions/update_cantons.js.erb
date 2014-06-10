@@ -1,0 +1,3 @@
+//alert("<%#= @codigo %>");
+$('#canton_select').html("<%= escape_javascript(options_for_select(@canton)) %>");
+$('#parish_select').html("<%= escape_javascript(options_for_select(@parroquia)) %>");

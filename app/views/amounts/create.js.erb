@@ -1,0 +1,39 @@
+$('#amount_new').html('<%= escape_javascript(render :partial =>'amounts/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @amo_cantidad%>' == "blank")
+  { document.getElementById("amounts_index_amo_cantidad").style.border="1px solid #dc143c";
+    document.getElementById("amounts_index_amo_cantidad").focus();
+  }
+  else
+  { document.getElementById("amounts_index_amo_cantidad").style.border="1px solid #ddd";
+    document.getElementById("amounts_index_amo_fecha").focus();
+  }
+}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("El pago de #{@mes} - #{@cuota.amo_anio} ya fue realizado")%>');
+    document.getElementById("amounts_index_amo_mes").style.border="1px solid #dc143c";
+    document.getElementById("amounts_index_amo_anio").style.border="1px solid #dc143c";
+  }
+}
+
+if ('<%= @amo_fecha%>' == "blank")
+{ document.getElementById("amounts_index_amo_fecha").style.border="1px solid #dc143c";}
+else
+{ document.getElementById("amounts_index_amo_fecha").style.border="1px solid #ddd";}
+
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#amount_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#amount_new").dialog("close");
+                }
+            }
+});

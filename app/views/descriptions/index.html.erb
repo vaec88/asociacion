@@ -1,0 +1,46 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= javascript_include_tag "validaciones_descripts_new.js"%>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#descriptions_index_param_val_unit").keypress(isNumberKey);
+    });
+  </script>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Descripcion de Parametro</p></div></th>
+    <th><div class="titulos"><p>Valor</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @params_vals.each do |pv| %>
+      <tr>
+        <%#= check_box_tag 'pv_ids[]', pv.id %>
+        <td><%= label_tag nil, pv.param_val_descrip %></td>
+        <td><%= label_tag nil, (number_with_precision pv.param_val_unit, :precision => 2) %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => pv.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action => "eliminar", :id => pv.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+
+    <%= form_for @param_val, :remote=>true do |pv|%>
+      <tr>
+        <td><%= pv.text_field :param_val_descrip, :id=>"descriptions_index_param_val_descrip", :autofocus => true, :class=>"width_auto"%></td>
+        <td><%= pv.text_field :param_val_unit, :id=>"descriptions_index_param_val_unit", :style=>"width:50px" %></td>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="description_new">
+
+</div>
+<div id="description_edit">
+
+</div>
+<div id="description_delete">
+
+</div>
+<div id="description_no_delete">
+
+</div>
+<%#= link_to 'Agregar nueva descripcion', new_description_path %>

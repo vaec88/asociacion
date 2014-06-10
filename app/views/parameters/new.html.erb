@@ -1,0 +1,9 @@
+<%= form_for @parametro do |p|%>
+  <p>
+    <%= p.label :"Parametro de Avaluo" %>
+    <%= p.text_field :param_descrip %>
+  </p>
+  <p>
+    <%= p.submit "Guardar"%>
+  </p>
+<%end%>

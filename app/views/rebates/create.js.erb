@@ -1,0 +1,23 @@
+$('#rebate_new').html('<%= escape_javascript(render :partial =>'rebates/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_new').html('<%= escape_javascript("#{@depreciacion.met_nombre}"+' ya existe, por favor ingrese otro nombre')%>');}
+}
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#rebate_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#rebate_new").dialog("close");
+                    document.getElementById("rebates_index_met_nombre").focus();
+                    $('#rebates_index_met_nombre').val("");
+                }
+            }
+});

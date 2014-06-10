@@ -1,0 +1,21 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_province">
+  <%= form_for @provincia, :remote=>true do |p|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Nombre de Provincia:" %></td>
+          <td><%= p.text_field :prov_nombre, :id=>"provinces_edit_prov_nombre", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= p.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

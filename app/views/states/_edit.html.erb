@@ -1,0 +1,29 @@
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#states_edit_met_val_unit").keypress(isNumberKey);
+    });
+  </script>
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_state">
+    <%= form_for @estado, :remote=>true do |e|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Nombre del Estado:" %></td>
+          <td><%= e.text_field :met_val_descrip, :id=>"states_edit_met_val_descrip", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag nil, "Valor:" %></td>
+          <td><%= e.text_field :met_val_unit, :id=>"states_edit_met_val_unit" %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+      <%= hidden_field_tag :rebate_id, @estado.rebate_id %>
+    <%end%>
+  </div>
+</div>

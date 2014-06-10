@@ -1,0 +1,14 @@
+$('#role_no_delete').html('<%= escape_javascript(render :partial =>'roles/no_eliminar')%>');
+$('#role_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#role_no_delete").dialog("close");
+                }
+            }
+});

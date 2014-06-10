@@ -1,0 +1,89 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="form_edit_role">
+<%= form_for @roles, :remote=>true do |f|%>
+  <%if @roles.rol_nombre=="Administrador"%>
+    <div id="tabla">
+      <table class="bordered">
+        <th><div class="titulos"><p>Cedula</p></div></th>
+        <th><div class="titulos"><p>Apellidos</p></div></th>
+        <th><div class="titulos"><p>Nombres</p></div></th>
+        <th><div class="titulos"><p>Email</p></div></th>
+        <%= hidden_field_tag :persona_id_old, nil %> <!-- BANDERA PARA CONTROLAR CUANDO EL DESARROLLADOR ASIGNA A UN CORREDOR COMO ADMIN POR PRIMERA VEZ -->
+        <%@corredores.each do |c|%>
+          <tr>
+            <td>
+              <%if @admin_corr.nil? == false%> <!-- SI SE CUMPLE LA CONDICION: UNO DE LOS CORREDORES ES ADMIN-->
+                <%if @admin_corr.id == c.id%> <!-- SI SE CUMPLE LA CONDICION: UNO DE LOS CORREDORES ES ADMIN Y EL USUARIO ACTUAL ES EL DESARROLLADOR-->
+                  <%= radio_button_tag(:persona_id, c.id, checked=true) %>
+                  <%= hidden_field_tag :persona_id_old, c.id %>
+                <%else%>
+                  <%= radio_button_tag :persona_id, c.id %>
+                <%end%>
+              <%else%>
+                <%= radio_button_tag :persona_id, c.id %>
+              <%end%>
+              <%#= radio_button_tag :persona_id, c.id %>
+              <%= label_tag nil, c.pers_cedula%>
+            </td>
+            <td><%= label_tag nil, c.pers_apellido%></td>
+            <td><%= label_tag nil, c.pers_nombre%></td>
+            <td><%= label_tag nil, c.pers_email%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  <%end%>
+
+  <%if @roles.rol_nombre=="Tesorero"%>
+    <div id="tabla">
+      <table class="bordered">
+        <th><div class="titulos"><p>Cedula</p></div></th>
+        <th><div class="titulos"><p>Apellidos</p></div></th>
+        <th><div class="titulos"><p>Nombres</p></div></th>
+        <th><div class="titulos"><p>Email</p></div></th>
+        <%@corredores.each do |c|%>
+          <tr>
+            <td>
+              <%if @teso_corr.nil? == false%> <!-- SI SE CUMPLE LA CONDICION: UNO DE LOS CORREDORES ES TESORERO-->
+                <%if @teso_corr.id == c.id%>  <!-- SI SE CUMPLE LA CONDICION: UNO DE LOS CORREDORES ES TESORERO Y EL USUARIO ACTUAL ES EL DESARROLLADOR-->
+                  <%= radio_button_tag(:persona_teso_id, c.id, checked=true) %>
+                  <%= hidden_field_tag :persona_teso_id_old, c.id %>
+                <%else%>
+                  <%= radio_button_tag :persona_teso_id, c.id %>
+                <%end%>
+              <%else%>
+                <%= radio_button_tag :persona_teso_id, c.id %>
+              <%end%>
+          <%#= radio_button_tag :persona_id, c.id %>
+              <%= label_tag nil, c.pers_cedula%>
+            </td>
+            <td><%= label_tag nil, c.pers_apellido%></td>
+            <td><%= label_tag nil, c.pers_nombre%></td>
+            <td><%= label_tag nil, c.pers_email%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  <%end%>
+
+  <div id="formulario">
+    
+      <table class="centrar">
+        <tr>
+          <td><%= label_tag nil, "Nombre de Rol:" %></td>
+          <td><%= f.text_field :rol_nombre, :id=>"roles_edit_rol_nombre", :autofocus => true  %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= f.submit "Guardar"%></td>
+        </tr>-->
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+    </div>
+  
+<%end%>
+  </div>

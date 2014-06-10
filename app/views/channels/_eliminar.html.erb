@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_channel">
+    <%= form_tag destroy_channel_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar '#{@captacion.capt_nombre}'"%>
+      <%= hidden_field_tag :id, @captacion.id  %>
+    <%end%>
+  </div>
+</div>

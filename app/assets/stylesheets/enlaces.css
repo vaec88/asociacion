@@ -1,0 +1,16 @@
+#enlaces{
+	background-image:url(../images/login_back.png);
+}
+#enlaces p{
+	font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin: 10px 0px;
+}
+#enlaces img{
+	margin-left: 10px;
+}
+#logotipos{
+	text-align:center;
+}

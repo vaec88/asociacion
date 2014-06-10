@@ -1,0 +1,6 @@
+<%if @check == "existe"%>
+  $('#usuarios_'+'<%= @accion%>'+'_pers_email').html('<%= escape_javascript(@persona.pers_email + ' ya existe, por favor ingrese un correo diferente')%>');
+  $('#usuarios_'+'<%= @accion%>'+'_pers_email').show();
+<%else%>
+  $('#usuarios_'+'<%= @accion%>'+'_pers_email').hide();
+<%end%>

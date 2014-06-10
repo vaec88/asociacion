@@ -1,0 +1,19 @@
+$('#construction_contacto_correcto').html('<%= escape_javascript("Su solicitud se ha enviado de forma correcta")%>');
+document.getElementById("construction_contacto_correcto").style.color="#008000";
+$('#construction_contacto_correcto').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Correcto",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#construction_contacto_correcto").dialog("close");
+                    $('#check_const_contac_nom').val("");
+                    $('#check_const_contac_ape').val("");
+                    $('#check_const_contac_email').val("");
+                    $('#check_const_contac_msg').val("");
+                }
+            }
+});

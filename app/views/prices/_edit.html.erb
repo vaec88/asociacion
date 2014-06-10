@@ -1,0 +1,21 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_price">
+    <%= form_for @tabla_avaluo, :remote=>true do |ta|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Tabla de Avaluo:" %></td>
+          <td><%= ta.text_field :aval_descrip, :id=>"prices_edit_aval_descrip", :autofocus => true%></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= ta.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    <%end%>
+  </div>
+</div>

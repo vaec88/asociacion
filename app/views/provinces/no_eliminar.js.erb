@@ -1,0 +1,14 @@
+$('#province_no_delete').html('<%= escape_javascript(render :partial =>'provinces/no_eliminar')%>');
+$('#province_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#province_no_delete").dialog("close");
+                }
+            }
+});

@@ -1,0 +1,78 @@
+/*El menu horizontal*/
+.menu *
+{   list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+.menu
+{   margin: 0px auto;
+    padding: 0px;
+    height: 40px;
+    /*width: 898px;*/
+	width:100%;
+    background: #555;
+}
+.menu li a
+{   text-decoration: none;
+    padding: 0px 18px;
+    /*padding: 0px 25px;*/
+    display: block;
+    color: #eee;
+    font-family: Tahoma;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 28px;
+    margin: 6px 0px;
+    text-align: center;
+    border-left: 1px solid #000;
+    border-right: 1px solid #666;
+}
+/* Eliminamos los bordes del primer y el último */
+.menu li:first-child a { border-left: none; }
+.menu li:last-child a { border-right: none; }
+.submenu li a
+{   text-align: justify;
+    border: none;
+    /*border-bottom: 1px solid #111;*/
+}
+.menu ul li:last-child a { border: none; }
+.menu > li
+{   float: left;
+}
+.menu li a:hover
+{   background-color: #dcdcdc;
+    color: crimson;
+}
+.menu li ul
+{   display: none;
+    position: absolute;
+    min-width: 200px;
+    z-index: 2;
+}
+.menu li:hover > ul
+{   display: block;
+    background-color: #555;
+}
+.menu li ul li
+{   position: relative;
+    
+}
+.menu li ul li ul
+{   top: -6px;
+    left: 200px;
+}
+
+.fixed {
+	position: fixed;
+	top: 0px;
+	z-index: 2;
+	
+	/*
+	box-shadow: 0 0 40px #222;
+	-webkit-box-shadow: 0 0 40px #222;
+	-moz-box-shadow: 0 0 40px #222;*/
+}
+
+#foto_usuario{
+	float:right;
+}

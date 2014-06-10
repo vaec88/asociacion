@@ -1,0 +1,47 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= javascript_include_tag "validaciones_honoraries_new.js"%>
+<script language="JavaScript" type="text/javascript" src="/javascripts/application.js"></script>
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    /*CAMPOS DE SOLO NUMEROS*/
+    $("#honoraries_index_hon_cantidad").keypress(isNumberKey);
+    $("#honoraries_index_hon_fecha").keypress(isBlankKey);
+  });
+</script>
+<div id="tabla">
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Cantidad de Abono</p></div></th>
+      <th><div class="titulos"><p>Fecha (aaaa-mm-dd)</p></div></th>
+      <th><div class="titulos"><p>Acciones</p></div></th>
+    </tr>
+    <%@honorarios.each do |h| %>
+      <tr>
+        <td><div class="etiquetas_left"><%= label_tag nil, h.hon_cantidad %></div></td>
+        <td><div class="etiquetas_left"><%= label_tag nil, h.hon_fecha.strftime('%Y-%m-%d') %></div></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => h.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>h.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+
+    <%= form_for @honorario, :remote=>true do |h|%>
+      <tr>
+        <td><%= h.text_field :hon_cantidad, :id=>"honoraries_index_hon_cantidad", :autofocus => true, :style=>"width:100px" %></td>
+        <td><%= h.text_field :hon_fecha, :id=>"honoraries_index_hon_fecha", :style=>"width:150px", :readonly=>true %></td>
+        <%= hidden_field_tag :construction_id, @inmueble.id %>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+      
+  </table>
+</div>
+<div id="honorary_new">
+
+</div>
+<div id="honorary_edit">
+
+</div>
+<div id="honorary_delete">
+
+</div>

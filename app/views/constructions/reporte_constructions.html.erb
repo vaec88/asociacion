@@ -1,0 +1,42 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <div id="imagen_cabecera">
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Reporte de Inmuebles</h1>
+
+    <%if @inmueble.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Ubicacion</p></div></th>
+          <th><div class="titulos"><p>Detalle</p></div></th>
+          <th><div class="titulos"><p>Inversion</p></div></th>
+          <th><div class="titulos"><p>Propietario</p></div></th>
+          <th><div class="titulos"><p>Demandante</p></div></th>
+        </tr>
+        <% @inmueble.each do |inm| %>
+          <tr>
+            <td><%= label_tag nil, "#{inm.parish.canton.province.prov_nombre} - #{inm.parish.canton.cant_nombre} - #{inm.parish.parr_nombre}" %></td>
+            <td><%= label_tag nil, "#{inm.operation.oper_nombre} de #{inm.property.propd_nombre} en sector #{inm.inm_ciudadela}, calle #{inm.inm_calle}" %></td>
+            <td><%= label_tag nil, "$ #{inm.inm_val_merc}" %></td>
+            <%propietario = inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_propietario.id}).first%>
+            <td><%= label_tag nil, "#{propietario.pers_apellido} #{propietario.pers_nombre}" %></td>
+            <%if inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_demandante.id}).first%>
+              <%demandante = inm.personas.where(:personas_constructions_roles=>{:role_id=>@rol_demandante.id}).first%>
+              <td><%= label_tag nil, "#{demandante.pers_apellido} #{demandante.pers_nombre}" %></td>
+            <%else%>
+              <td><%= label_tag nil, "Pendiente" %></td>
+            <%end%>
+          </tr>
+        <% end %>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>

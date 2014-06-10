@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_diary">
+    <%= form_tag destroy_diary_path do%>
+      <%= label_tag nil, "¿Esta seguro que desea eliminar esta Actividad?"%>
+      <%= hidden_field_tag :id, @actividad.id  %>
+    <%end%>
+  </div>
+</div>

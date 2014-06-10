@@ -1,0 +1,49 @@
+$('#diary_new').html('<%= escape_javascript(render :partial =>'diaries/show')%>');
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_new').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @age_direccion%>' == "blank")
+  { document.getElementById("diaries_index_age_direccion").style.border="1px solid #dc143c";
+    document.getElementById("diaries_index_age_direccion").focus();
+  }
+  else
+  { document.getElementById("diaries_index_age_direccion").style.border="1px solid #ddd";}
+
+  if ('<%= @age_hora%>' == "blank")
+  { document.getElementById("diaries_index_age_hora").style.border="1px solid #dc143c";
+    document.getElementById("diaries_index_age_hora").focus();
+  }
+  else
+  { document.getElementById("diaries_index_age_hora").style.border="1px solid #ddd";}
+
+  if ('<%= @age_actividad%>' == "blank")
+  { document.getElementById("diaries_index_age_actividad").style.border="1px solid #dc143c";
+    document.getElementById("diaries_index_age_actividad").focus();
+  }
+  else
+  { document.getElementById("diaries_index_age_actividad").style.border="1px solid #ddd";}
+  
+}
+
+function trim(cadena1, cadena2)
+{
+var retorno1 = cadena1.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var retorno2 = cadena2.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#diaries_index_age_actividad").val(retorno1);
+$("#diaries_index_age_direccion").val(retorno2);
+}
+    
+document.getElementById("advertencia_new").style.color="#F50E0E";
+$('#diary_new').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Nuevo",
+  modal: true,
+  buttons: {
+                "OK" : function()
+                {
+                    $("#diary_new").dialog("close");
+                    trim(document.getElementById("diaries_index_age_actividad").value, document.getElementById("diaries_index_age_direccion").value);
+                }
+            }
+});

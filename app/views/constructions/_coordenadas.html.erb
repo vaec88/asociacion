@@ -1,0 +1,286 @@
+<html>
+  <body>
+    <style type="text/css">
+
+      div#map {
+              position: relative;
+        width:100%;
+        height:600px;
+        margin-top: 80px;
+        margin-bottom:40px;
+        border-top: 4px solid #333;
+        border-bottom: 4px solid #333;
+      }
+
+      div#map_canvas {
+        width:100%;
+        height:600px;
+      }
+
+      div#map .zoom{
+        display: none;
+      }
+
+      div#map .form{
+        position: absolute;
+        top: -54px;
+        left: 50%;
+        width:980px;
+        height:50px;
+        margin:0 0 0 -490px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        background: #FFFD8B;
+        -webkit-border-bottom-right-radius: 2px;
+        -webkit-border-bottom-left-radius: 2px;
+        -moz-border-radius-bottomright: 2px;
+        -moz-border-radius-bottomleft: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        z-index: 1;
+      }
+
+      div#map .form .google{
+        position: absolute;
+        top: 7px;
+        left: 14px;
+        height: 30px;
+        z-index: 1;
+      }
+      div#map .coordinates{
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        width:499px;
+        height:40px;
+        margin:0 0 0 -250px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        z-index: 1;
+      }
+      div#map .coordinates em{
+        position: absolute;
+        top: -20px;
+        width: 249px;
+        height: 20px;
+        background: #6BAB96;
+        color: #000;
+        font-style: normal;
+        letter-spacing: 1px;
+        font-size: 10px;
+        line-height: 20px;
+        text-transform: uppercase;
+        font-weight: normal;
+      }
+      div#map .coordinates em.lat{
+        left: 0;
+      }
+      div#map .coordinates em.lon{
+        right: 0;
+      }
+      div#map .coordinates span{
+        display: block;
+        float: left;
+        width: 249px;
+        font-size: 18px;
+        line-height: 40px;
+        background: #333;
+      }
+      div#map .coordinates span#lng{
+        float: right;
+      }
+      div#map .coordinates span:hover{
+        background: #111;
+      }
+
+      div#map .address{
+        position: absolute;
+        bottom: -44px;
+        left: 0;
+        width:100%;
+        height:40px;
+        text-align: center;
+        line-height: 40px;
+        font-weight: bold;
+      }
+
+      div#crosshair {
+              display: block;
+              position: absolute;
+              top: 50%;
+        left: 50%;
+              height: 17px;
+              width: 16px;
+              margin-left: -8px;
+        margin-top: -8px;
+              background-image: url(/images/g_mapas/cursor.png);
+              background-position: 0 -23px;
+              background-repeat: no-repeat;
+      }
+
+      .logohtml5 {
+        display: none;
+      }
+    </style>
+
+    
+
+    <script type="text/javascript">
+      var map;
+      var geocoder;
+      var centerChangedLast;
+      var reverseGeocodedLast;
+      var currentReverseGeocodeResponse;
+
+      function initialize() {
+        //var latlng = new google.maps.LatLng(32.5468,-23.2031);
+        var latlng = new google.maps.LatLng(-1.2304,-78.9257);
+        var myOptions = {
+          zoom: 3,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        geocoder = new google.maps.Geocoder();
+        setupEvents();
+        centerChanged();
+      }
+
+      function setupEvents() {
+        reverseGeocodedLast = new Date();
+        centerChangedLast = new Date();
+
+        setInterval(function() {
+          if((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
+            if(reverseGeocodedLast.getTime() < centerChangedLast.getTime())
+              reverseGeocode();
+          }
+        }, 1000);
+
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+          document.getElementById("zoom_level").innerHTML = map.getZoom();
+        });
+
+        google.maps.event.addListener(map, 'center_changed', centerChanged);
+
+        google.maps.event.addDomListener(document.getElementById('crosshair'),'dblclick', function() {
+           map.setZoom(map.getZoom() + 1);
+        });
+
+      }
+
+      function getCenterLatLngText() {
+        return '(' + map.getCenter().lat() +', '+ map.getCenter().lng() +')';
+      }
+
+      function centerChanged() {
+        centerChangedLast = new Date();
+        var latlng = getCenterLatLngText();
+        var lat = map.getCenter().lat();
+        var lng = map.getCenter().lng();
+        document.getElementById('lat').innerHTML = lat;
+        document.getElementById('lng').innerHTML = lng;
+        document.getElementById('formatedAddress').innerHTML = '';
+        currentReverseGeocodeResponse = null;
+        /*$("#lat2").val(document.getElementById("lat").textContent);
+        $("#lng2").val(document.getElementById("lng").textContent);*/
+        /*document.getElementById('lat2')
+        document.getElementById('lng2')*/
+        ;
+      }
+
+      function reverseGeocode() {
+        reverseGeocodedLast = new Date();
+        geocoder.geocode({latLng:map.getCenter()},reverseGeocodeResult);
+      }
+
+      function reverseGeocodeResult(results, status) {
+        currentReverseGeocodeResponse = results;
+        if(status == 'OK') {
+          if(results.length == 0) {
+            document.getElementById('formatedAddress').innerHTML = 'None';
+          } else {
+            document.getElementById('formatedAddress').innerHTML = results[0].formatted_address;
+          }
+        } else {
+          document.getElementById('formatedAddress').innerHTML = 'Error';
+        }
+      }
+
+      function geocode() {
+        var address = document.getElementById("address").value;
+        geocoder.geocode({
+          'address': address,
+          'partialmatch': true}, geocodeResult);
+      }
+
+      function geocodeResult(results, status) {
+        if (status == 'OK' && results.length > 0) {
+          map.fitBounds(results[0].geometry.viewport);
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      }
+
+      function addMarkerAtCenter() {
+        var marker = new google.maps.Marker({
+            position: map.getCenter(),
+            map: map
+        });
+
+        var text = 'Lat/Lng: ' + getCenterLatLngText();
+        if(currentReverseGeocodeResponse) {
+          var addr = '';
+          if(currentReverseGeocodeResponse.size == 0) {
+            addr = 'None';
+          } else {
+            addr = currentReverseGeocodeResponse[0].formatted_address;
+          }
+          text = text + '<br>' + 'Dirección: <br>' + addr;
+        }
+
+        var infowindow = new google.maps.InfoWindow({ content: text });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+      }
+    </script>
+
+    <div id="map">
+      <div id="map_canvas"></div>
+      <div id="crosshair"></div>
+      <div class="form">
+        <p><input type="text" id="address" placeholder="Escribe aquí tu lugar..." value="" class="input"> <input type="button" value="Buscar" onclick="geocode()" class="button"> <!--<input type="button" value="Insertar marcador" onclick="addMarkerAtCenter()" class="button">--></p>
+      </div>
+        <div class="coordinates">
+          <em class="lat">Latitud</em>
+          <em class="lon">Longitud</em>
+          <span id="lat"></span>
+          <span id="lng"></span>
+        </div>
+        <div class="address">
+          <span id="formatedAddress">-</span>
+        </div>
+        <span id="zoom_level"></span>
+    </div>
+    <script language="JavaScript" type="text/javascript" src="/javascripts/coordenadas_jq.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/javascripts/coordenadas_script.js"></script>
+  </body>
+</html>
+
+
+<!-- SCRIPTS PARA JQUERY DIALOG -->
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<!-- HASTA AQUI -->
+
+
+
+<script>
+  $(document).ready(function(){
+    initialize();
+  });
+</script>

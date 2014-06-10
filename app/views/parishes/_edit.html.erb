@@ -1,0 +1,22 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_parish">
+  <%= form_for @parroquia, :remote=>true do |p|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Nombre de Parroquia:" %></td>
+          <td><%= p.text_field :parr_nombre, :id=>"parishes_edit_parr_nombre", :autofocus => true %></td>
+        </tr>
+        <%= hidden_field_tag :canton_id, @parroquia.canton_id %>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= p.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

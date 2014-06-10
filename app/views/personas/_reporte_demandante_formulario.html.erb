@@ -1,0 +1,13 @@
+<div id="formulario">
+  <div id="form_reporte_demandante">
+    <%#= form_tag reporte_amount_path, :target=>"DoSubmit", :onsubmit=>"DoSubmit = window.open('about:blank','DoSubmit','width=400,height=350,resizeable=no,scrollbars');"  do%>
+    <%= form_tag reporte_demandante_path, :target=>"_blank"  do%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Negociacion: "%></td>
+          <td class="select_edit"><%= select :estado_negociacion, nil, options_for_select(@estados_negociacion), { :include_blank => false }, {:style => "width:150px", :id=>"select_estado_negociacion"} %></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>
+</div>

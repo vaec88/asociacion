@@ -1,0 +1,21 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_channel">
+  <%= form_for @captacion, :remote=>true do |c|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Medio de Captacion:" %></td>
+          <td><%= c.text_field :capt_nombre, :id=>"channels_edit_capt_nombre", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= c.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

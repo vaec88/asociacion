@@ -1,0 +1,38 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<div id="tabla">
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Cliente</p></div></th>
+      <th><div class="titulos"><p>Direccion</p></div></th>
+      <th><div class="titulos"><p>Celular</p></div></th>
+      <th><div class="titulos"><p>Email</p></div></th>
+      <th><div class="titulos"><p>Inmueble</p></div></th>
+      <th><div class="titulos"><p>Negociacion</p></div></th>
+    </tr>
+    <%@demandantes.each do |d|%>
+      <tr>
+        <td><%= label_tag nil, "#{d.pers_apellido} #{d.pers_nombre}"%></td>
+        <td><%= label_tag nil, d.pers_direccion %></td>
+        <td><%= label_tag nil, d.pers_telefono2 %></td>
+        <td><%= label_tag nil, d.pers_email %></td>
+        <td><%= label_tag nil, "#{d.constructions.first.inm_ciudadela} - #{d.constructions.first.inm_calle}"%></td>
+        <%if d.constructions.first.inm_estado == "P"%>
+          <%estado_const = "En Proceso"%>
+        <%end%>
+        <%if d.constructions.first.inm_estado == "I"%>
+          <%estado_const = "Finalizado"%>
+        <%end%>
+        <td><%= label_tag nil, "#{estado_const}" %></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<%= label_tag nil, (link_to (image_tag("contenido/note_edit.png")+" "+" Generar Reporte"), {:action=>"reporte_demandante_formulario", :id=>1}, :remote=>true)%>
+<div id="usuario_reporte_demandante">
+
+</div>
+<%#@inmuebles_current.each do |ic|%>
+  <%#= ic.id %>
+<%#end%>

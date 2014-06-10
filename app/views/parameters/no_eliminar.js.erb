@@ -1,0 +1,14 @@
+$('#parameter_no_delete').html('<%= escape_javascript(render :partial =>'parameters/no_eliminar')%>');
+$('#parameter_no_delete').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Eliminar",
+  modal: true,
+  buttons: {
+                "Aceptar": function()
+                {
+                    $("#parameter_no_delete").dialog("close");
+                }
+            }
+});

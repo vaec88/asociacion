@@ -1,0 +1,11 @@
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_edit').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');}
+else
+{ if ('<%= @bandera%>' == "exist")
+  { $('#advertencia_edit').html('<%= escape_javascript(' El nombre ya existe, por favor ingrese uno diferente')%>');}
+}
+document.getElementById("advertencia_edit").style.color="#F50E0E";
+$('#advertencia_edit').show();
+setTimeout(function(){$('#advertencia_edit').hide()},6000);
+document.getElementById("parameters_edit_param_descrip").focus();
+$('#parameters_edit_param_descrip').val("");

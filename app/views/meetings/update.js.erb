@@ -1,0 +1,28 @@
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_edit').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @reu_detalle%>' == "blank")
+  { document.getElementById("meetings_edit_reu_detalle").style.border="1px solid #dc143c";
+    document.getElementById("meetings_edit_reu_detalle").focus();
+  }
+  else
+  { document.getElementById("meetings_edit_reu_detalle").style.border="1px solid #ddd";}
+  if ('<%= @reu_actores%>' == "blank")
+  { document.getElementById("meetings_edit_reu_actores").style.border="1px solid #dc143c";
+    document.getElementById("meetings_edit_reu_actores").focus();
+  }
+  else
+  { document.getElementById("meetings_edit_reu_actores").style.border="1px solid #ddd";}
+}
+
+function trim(cadena1, cadena2)
+{
+var retorno1 = cadena1.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var retorno2 = cadena2.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#meetings_edit_reu_actores").val(retorno1);
+$("#meetings_edit_reu_detalle").val(retorno2);
+}
+
+document.getElementById("advertencia_edit").style.color="#F50E0E";
+$('#advertencia_edit').show();
+setTimeout(function(){$('#advertencia_edit').hide()},6000);
+trim(document.getElementById("meetings_edit_reu_actores").value, document.getElementById("meetings_edit_reu_detalle").value);

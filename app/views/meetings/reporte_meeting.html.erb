@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <%#= @estado_pago %>
+      <%#= @estado_mes %>
+      <%#= @estado_anio %>
+      <div id="imagen_cabecera">
+        <!--<img width="689" height="177"<%#= image_tag "reportes/encabezado.JPG" %></img>-->
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Reuniones del Inmueble de <%= @inmueble.inm_ciudadela %> - <%= @inmueble.inm_calle %></h1>
+
+    <%if @reuniones.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Actores</p></div></th>
+          <th><div class="titulos"><p>Detalle</p></div></th>
+          <th><div class="titulos"><p>Fecha - Hora</p></div></th>
+        </tr>
+        <% @reuniones.each do |r| %>
+          <tr>
+            <td><%= label_tag nil, r.reu_actores %></td>
+            <td><%= label_tag nil, r.reu_detalle %></td>
+            <td><%= label_tag nil, r.reu_fecha_hora.strftime('%d/%m/%Y %H:%M:%S') %></td>
+          </tr>
+        <% end %>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>

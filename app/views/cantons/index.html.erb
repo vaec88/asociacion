@@ -1,0 +1,36 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= label_tag nil, (link_to ">> Provincias ", index_province_path), :class=>"negrita" %><%= label_tag nil, (">> " + @province.prov_nombre), :class=>"negrita" %>
+<div id="tabla">
+  <table class="bordered">
+    <th><div class="titulos"><p>Canton</p></div></th>
+    <th><div class="titulos"><p>Acciones</p></div></th>
+    <% @cantones.each do |c| %>
+      <tr>
+        <td><%= label_tag nil, (link_to '+', index_parish_path(:canton_id => c.id))%><%= label_tag nil, c.cant_nombre %></td>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => c.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id=>c.id}, :remote=>true) %></td>
+      </tr>
+    <% end %>
+    <%= form_for @canton, :remote=>true do |c|%>
+      <tr>
+        <td><%= c.text_field :cant_nombre, :id=>"cantons_index_cant_nombre", :autofocus => true %></td>
+        <%= c.hidden_field :province_id, value: @id %>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+<div id="canton_new">
+
+</div>
+<div id="canton_edit">
+
+</div>
+<div id="canton_delete">
+
+</div>
+<div id="canton_no_delete">
+
+</div>
+<%#= link_to 'Agregar nuevo canton', new_canton_path(:province_id => @id) %>

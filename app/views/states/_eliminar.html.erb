@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_state">
+  <%= form_tag destroy_state_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@estado.met_val_descrip}'"%>
+    <%= hidden_field_tag :id, @estado.id  %>
+  <%end%>
+  </div>
+</div>

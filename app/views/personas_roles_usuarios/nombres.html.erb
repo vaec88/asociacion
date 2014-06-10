@@ -1,0 +1,10 @@
+<table>
+
+<% for detalle in @list_nombre %>
+      <tr>
+        <td><%= detalle.persona_id %></td>
+        <td><%= detalle.role_id %></td>
+        <td><%= detalle.usuario_id %></td>
+      </tr>
+    <% end %>
+</table>

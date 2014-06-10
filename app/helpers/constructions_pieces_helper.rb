@@ -1,0 +1,2 @@
+module ConstructionsPiecesHelper
+end

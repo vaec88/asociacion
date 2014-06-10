@@ -1,0 +1,36 @@
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="formulario">
+  <div id="form_edit_parameter">
+    <%= form_for @parametro, :remote=>true do |p|%>
+      <table>
+        <tr>
+          <td><%= label_tag nil, "Parametro de Avaluo:" %></td>
+          <td><%= p.text_field :param_descrip, :id=>"parameters_edit_param_descrip", :autofocus => true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+      </table>
+    <br/>
+      <table>
+      <% for description in Description.find(:all) %>
+        
+          <tr>
+            <td><%= check_box_tag "parameter[description_ids][]", description.id, @parametro.descriptions.include?(description) %></td>
+            <td><%= label_tag nil, description.param_val_descrip, :class=>"check_box" %></td>
+            <td><%= label_tag nil, (number_with_precision description.param_val_unit, :precision => 2), :class=>"check_box" %></td>
+
+          </tr>
+        
+      <% end %>
+      </table>
+      <!--<table>
+        <tr>
+          <td colspan="2" class="boton"><%#= p.submit "Guardar"%></td>
+        </tr>
+      </table>-->
+    <%end%>
+  </div>
+</div>

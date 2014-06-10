@@ -1,0 +1,18 @@
+$('#province_edit').html('<%= escape_javascript(render :partial =>'provinces/edit')%>');
+$('#province_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_province form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#province_edit").dialog("close");
+                }
+            }
+});

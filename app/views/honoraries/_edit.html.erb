@@ -1,0 +1,37 @@
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    /*CAMPOS DE SOLO NUMEROS*/
+    $("#honoraries_edit_hon_cantidad").keypress(isNumberKey);
+    $("#honoraries_edit_hon_fecha").keypress(isBlankKey);
+    //PARA INGRESAR LA FECHA POR MEDIO DE CALENDARIO
+    $(function (){
+      $('#honoraries_edit_hon_fecha').datepicker({
+      dateFormat : "yy-mm-dd"});
+    });
+  });
+</script>
+<script>
+  $("#advertencia_edit").hide();
+</script>
+<div id="form_edit_honorary">
+  <%= form_for @honorario, :remote=>true do |h|%>
+    <div id="formulario">
+      <table>
+        <tr>
+          <td><%= h.label "Cantidad de Abono: " %></td>
+          <td><%= h.text_field :hon_cantidad, :id=>"honoraries_edit_hon_cantidad", :autofocus => true  %></td>
+        </tr>
+        <tr>
+          <td><%= h.label "Fecha de Transaccion: " %></td>
+          <td><%= h.text_field :hon_fecha, :id=>"honoraries_edit_hon_fecha", :value => (@honorario.hon_fecha.strftime('%Y-%m-%d')), :readonly=>true %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="centrar_obj"><%= label_tag nil, "", :id=>"advertencia_edit", :class=>"mensaje" %></td>
+        </tr>
+        <!--<tr>
+          <td colspan="2" class="boton"><%#= h.submit "Guardar"%></td>
+        </tr>-->
+      </table>
+    </div>
+  <%end%>
+</div>

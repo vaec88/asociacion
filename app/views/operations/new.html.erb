@@ -1,0 +1,9 @@
+<%= form_for @operacion do |o|%>
+  <p>
+    <%= o.label :"Tipo de Operacion" %>
+    <%= o.text_field :oper_nombre %>
+  </p>
+  <p>
+    <%= o.submit "Guardar"%>
+  </p>
+<%end%>

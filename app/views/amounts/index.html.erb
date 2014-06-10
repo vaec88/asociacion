@@ -1,0 +1,65 @@
+<script language="JavaScript" type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"></link>
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= javascript_include_tag "validaciones_amounts_new.js"%>
+<script language="JavaScript" type="text/javascript" src="/javascripts/application.js"></script>
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function() {
+      /*CAMPOS DE SOLO NUMEROS*/
+      $("#amounts_index_amo_cantidad").keypress(isNumberKey);
+    });
+  </script>
+<%#= @usuario.usu_username %>
+<%#= @mes %>
+<%#= @persona %>
+<%= label_tag nil, (link_to ">> Usuarios ", index_usuarios_path), :class=>"negrita" %><%= label_tag nil, (">> Cuotas Mensuales" ), :class=>"negrita" %><%= label_tag nil, (">> #{@persona.pers_apellido} #{@persona.pers_nombre}" ), :class=>"negrita" %>
+<div id="tabla">
+  <table class="bordered">
+    <tr>
+      <th><div class="titulos"><p>Cantidad</p></div></th>
+      <th><div class="titulos"><p>Mes</p></div></th>
+      <th><div class="titulos"><p>Año</p></div></th>
+      <th><div class="titulos"><p>Fecha (aaaa-mm-dd)</p></div></th>
+      <th><div class="titulos"><p>Acciones</p></div></th>
+    </tr>
+    <%@cuotas.each do |c|%>
+      <tr>
+        <td><%= label_tag nil, c.amo_cantidad %></td>
+          <%if c.amo_mes == 1%><%@mes = "Enero"%><%end%><%if c.amo_mes == 2%><%@mes = "Febrero"%><%end%>
+          <%if c.amo_mes == 3%><%@mes = "Marzo"%><%end%><%if c.amo_mes == 4%><%@mes = "Abril"%><%end%>
+          <%if c.amo_mes == 5%><%@mes = "Mayo"%><%end%><%if c.amo_mes == 6%><%@mes = "Junio"%><%end%>
+          <%if c.amo_mes == 7%><%@mes = "Julio"%><%end%><%if c.amo_mes == 8%><%@mes = "Agosto"%><%end%>
+          <%if c.amo_mes == 9%><%@mes = "Septiembre"%><%end%><%if c.amo_mes == 10%><%@mes = "Octubre"%><%end%>
+          <%if c.amo_mes == 11%><%@mes = "Noviembre"%><%end%><%if c.amo_mes == 12%><%@mes = "Diciembre"%><%end%>
+        <td><%= label_tag nil, @mes %></td>
+        <td><%= label_tag nil, c.amo_anio %></td>
+        <td><%= label_tag nil, c.amo_fecha %><%#= label_tag nil, c.amo_fecha.strftime('%Y-%m-%d') %></td>
+        <%#= label_tag nil, c.amo_fecha.strftime('%d/%m/%Y') %>
+        <td><%= label_tag nil, (link_to (image_tag "contenido/edit16.png"), {:action => "edit", :id => c.id, :usuario_id=>c.user_id,:persona_id=>@persona.id}, :remote=>true) %><%= label_tag nil, (link_to (image_tag "contenido/delete16.png"), {:action=>"eliminar", :id => c.id, :usuario_id=>c.user_id,:persona_id=>@persona.id}, :remote=>true) %></td>
+      </tr>
+    <%end%>
+
+    <%= form_for @cuota, :remote=>true do |c|%>
+      <tr>
+        <td><%= c.text_field :amo_cantidad, :id=>"amounts_index_amo_cantidad" ,:style=>"width:50px", :autofocus=>true %></td>
+        <td><%= c.select :amo_mes, options_for_select([["Enero","1"],["Febrero","2"],["Marzo","3"],["Abril","4"],["Mayo","5"],["Junio","6"],["Julio","7"],["Agosto","8"],["Septiembre","9"],["Octubre","10"],["Noviembre","11"],["Diciembre","12"]]), { :include_blank => false }, {:style => "width:100px", :id=>"amounts_index_amo_mes"}%></td>
+        <td><%= c.select :amo_anio, options_for_select([["2013"],["2014"]]), { :include_blank => false }, {:style => "width:100px", :id=>"amounts_index_amo_anio"} %></td>
+        <td><%= c.text_field :amo_fecha, :id=>"amounts_index_amo_fecha", :style=>"width:150px", :readonly=>true%></td>
+        <%= hidden_field_tag :usuario_id, @usuario.id %>
+        <%= hidden_field_tag :persona_id, @persona.id %>
+        <td><%= label_tag nil, image_submit_tag("contenido/add2-16.png")%></td>
+      </tr>
+    <%end%>
+      
+  </table>
+</div>
+<div id="amount_new">
+
+</div>
+<div id="amount_edit">
+
+</div>
+<div id="amount_delete">
+
+</div>
+<%#= link_to 'Agregar pago de cuota', new_amount_path(:usuario_id => @usuario.id) %>

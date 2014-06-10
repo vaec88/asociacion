@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_solicitude">
+    <%= form_tag destroy_solicitude_path do%>
+      <%= label_tag nil, "Esta seguro que desea eliminar la solicitud de '#{@solicitud.sol_nombre} #{@solicitud.sol_apellido}'"%>
+      <%= hidden_field_tag :id, @solicitud.id  %>
+    <%end%>
+  </div>
+</div>

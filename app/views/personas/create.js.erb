@@ -1,0 +1,58 @@
+alert("Errores");
+if ('<%= @error_cedula%>' == "")
+{ $('#constructions_new_demand_cedula').hide();}
+else
+{ $('#constructions_new_demand_cedula').show();
+  $('#constructions_new_demand_cedula').html('<%= escape_javascript(@error_cedula)%>');
+}
+
+if ('<%= @error_apellido%>' == "")
+{ $('#constructions_new_demand_apellido').hide();}
+else
+{ $('#constructions_new_demand_apellido').show();
+  $('#constructions_new_demand_apellido').html('<%= escape_javascript(@error_apellido)%>');
+}
+
+if ('<%= @error_nombre%>' == "")
+{ $('#constructions_new_demand_nombre').hide();}
+else
+{ $('#constructions_new_demand_nombre').show();
+  $('#constructions_new_demand_nombre').html('<%= escape_javascript(@error_nombre)%>');
+}
+
+if ('<%= @error_direccion%>' == "")
+{ $('#constructions_new_demand_direccion').hide();}
+else
+{ $('#constructions_new_demand_direccion').show();
+  $('#constructions_new_demand_direccion').html('<%= escape_javascript(@error_direccion)%>');
+}
+
+if ('<%= @error_telefono2%>' == "")
+{ $('#constructions_new_demand_telefono2').hide();}
+else
+{ $('#constructions_new_demand_telefono2').show();
+  $('#constructions_new_demand_telefono2').html('<%= escape_javascript(@error_telefono2)%>');
+}
+
+if ('<%= @error_email%>' == "")
+{ $('#constructions_new_demand_email').hide();}
+else
+{ $('#constructions_new_demand_email').show();
+  $('#constructions_new_demand_email').html('<%= escape_javascript(@error_email)%>');
+}
+
+function trim(apellido, nombre, direccion)
+{
+var apell = apellido.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var nomb = nombre.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+var direc = direccion.replace(/^(\s)*/,"").replace(/(\s)*$/,"").replace(/(\s+)/g," ");
+$("#pers_demand_apellidos").val(apell);
+$("#pers_demand_nombres").val(nomb);
+$("#pers_demand_direccion").val(direc);
+//alert(retorno);
+}
+
+var apellido = document.getElementById("pers_demand_apellidos").value
+var nombre = document.getElementById("pers_demand_nombres").value
+var direccion = document.getElementById("pers_demand_direccion").value
+trim(apellido, nombre, direccion);

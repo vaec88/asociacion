@@ -1,0 +1,2 @@
+class ConstructionsPricesController < ApplicationController
+end

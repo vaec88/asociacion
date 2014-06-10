@@ -1,0 +1,20 @@
+//alert("<%= @id_user%>");
+<%if @check == "existe"%>
+/*  document.getElementById("usuarios_new_usu_username").style.fontWeight="normal";
+  document.getElementById("usuarios_new_usu_username").style.color="#F50E0E";
+  document.getElementById("usuarios_new_usu_username").style.width="auto";
+  document.getElementById("usuarios_new_usu_username").style.float="right";
+  document.getElementById("usuarios_new_usu_username").style.marginLeft="90px";
+  document.getElementById("usuarios_new_usu_username").style.marginRight="auto";
+  document.getElementById("usuarios_new_usu_username").style.textAlign="justify";*/
+  $('#usuarios_'+'<%= @accion%>'+'_usu_username').html('<%= escape_javascript(@usuario.username + ' ya existe, por favor ingrese un usuario diferente')%>');
+  $('#usuarios_'+'<%= @accion%>'+'_usu_username').show();
+  
+<%else%>
+  <%if @usuario == ""%>
+    $('#usuarios_'+'<%= @accion%>'+'_usu_username').html('<%= escape_javascript("Debe ingresar un Nombre de Usuario")%>');
+    $('#usuarios_'+'<%= @accion%>'+'_usu_username').show();
+  <%else%>
+    $('#usuarios_'+'<%= @accion%>'+'_usu_username').hide();
+  <%end%>
+<%end%>

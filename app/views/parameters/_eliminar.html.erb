@@ -1,0 +1,8 @@
+<div id="formulario">
+  <div id="form_eliminar_parameter">
+  <%= form_tag destroy_parameter_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar '#{@parametro.param_descrip}'"%>
+    <%= hidden_field_tag :id, @parametro.id  %>
+  <%end%>
+  </div>
+</div>

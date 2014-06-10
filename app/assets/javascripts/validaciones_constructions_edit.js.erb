@@ -1,0 +1,323 @@
+      /*NO INGRESAR ESPACIOS EN BLANCO*/
+      function isBlankKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode == 32)
+            return false;
+
+         return true;
+      }
+	  
+      /*INGRESAR SOLO NUMEROS*/
+      function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+      /*INGRESAR SOLO LETRAS*/
+      function isLetterKey(event) {
+          var inputValue = event.which;
+          //alert(inputValue);
+        //if digits or not a space then don't let keypress work.
+        if((inputValue > 32 && inputValue < 65) || (inputValue > 90 && inputValue < 97) || (inputValue > 122 && inputValue < 209) || (inputValue > 209 && inputValue < 241) || (inputValue > 241)){
+            event.preventDefault();
+        }
+      }
+
+	/*VALIDACION PARA LA CEDULA*/
+	function checkCedula(update_propietario){
+        var obj_cedula = document.getElementById("pers_propiet_cedula");
+        obj_cedula.maxLength = 10;
+		obj_cedula.onchange=function(){
+			var cedula = obj_cedula.value;
+			var cedulaLength = cedula.length;
+			var sumando = 0;
+			var total=0;
+			var decenaSuperior = 0;
+			var digito10 = cedula[9];
+			var digito10Cal = 0;
+			if (cedulaLength==10){
+			  for(i=0;i<9;i++){
+				sumando=parseInt(cedula[i]);
+				if (i%2==0){
+				  sumando=parseInt(cedula[i]*2);
+				  if (sumando>9)
+					sumando=parseInt(sumando-9);
+				}
+				total=parseInt(total+sumando);
+			  }
+			  decenaSuperior = ((parseInt(total/10)+1)*10);
+			  digito10Cal = (decenaSuperior-total);
+			  $("#constructions_edit_pers_cedula").show();
+			  if ((digito10Cal==10 && digito10==0) || (digito10 == digito10Cal)){
+				$.ajax({
+					  url: update_propietario,
+					  data: {
+						numero_cedula : $(this).val()
+					  },
+					  dataType: "script"
+					});				
+				$('#constructions_edit_pers_cedula').html("El numero de cedula es correcto");
+				document.getElementById('constructions_edit_pers_cedula').style.color="#008000";
+			  }
+			  else{
+				if (digito10Cal==10)
+				  digito10Cal = 0;
+				$("#constructions_edit_pers_cedula").html("El ultimo digito debe ser " + digito10Cal);
+				document.getElementById("constructions_edit_pers_cedula").style.color="#F50E0E";
+			  }
+			}
+			else{
+			  if (cedula==""){
+				$("#constructions_edit_pers_cedula").html("Debe ingresar un Numero de Cedula");
+			  }
+			  else{
+				$("#constructions_edit_pers_cedula").html("El Numero de Cedula debe tener 10 digitos");
+			  }
+			  $("#constructions_edit_pers_cedula").show();
+			  document.getElementById("constructions_edit_pers_cedula").style.color="#F50E0E";
+			}
+
+        }
+      }
+      /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+      function checkApellido(){
+        var obj_apellido = document.getElementById("pers_propiet_apellidos");
+        if (obj_apellido.value==""){
+          $("#constructions_edit_pers_apellido").html("Debe ingresar los Apellidos");
+          $("#constructions_edit_pers_apellido").show();
+        }
+        else{
+          $("#constructions_edit_pers_apellido").hide();
+        }
+      }
+
+      function checkNombre(){
+        var obj_nombre = document.getElementById("pers_propiet_nombres");
+        if (obj_nombre.value==""){
+          $("#constructions_edit_pers_nombre").html("Debe ingresar los Nombres");
+          $(constructions_edit_pers_nombre).show();
+        }
+        else{
+          $("#constructions_edit_pers_nombre").hide();
+        }
+      }
+
+      function checkDireccion(){
+        var obj_direccion = document.getElementById("pers_propiet_direccion");
+        if (obj_direccion.value==""){
+          $("#constructions_edit_pers_direccion").html("Debe ingresar una Direccion");
+          $("#constructions_edit_pers_direccion").show();
+        }
+        else{
+          $("#constructions_edit_pers_direccion").hide();
+        }
+      }
+	  
+      function checkTelefono2(){
+        var obj_telefono2 = document.getElementById("pers_propiet_telefono2");
+        if (obj_telefono2.value==""){
+          $("#constructions_edit_pers_telefono2").html("Debe ingresar un Numero de Celular");
+          $("#constructions_edit_pers_telefono2").show();
+        }
+        else{
+          $("#constructions_edit_pers_telefono2").hide();
+        }
+      }
+	  
+	/*VALIDACION DE EMAIL*/
+      function checkEmail(pers_email_check){
+		var obj_email = document.getElementById("pers_propiet_email");
+		//var obj_persona_id = document.getElementById("hidden_persona_id");
+		var obj_propiet_existe = document.getElementById("pers_propiet_existe");
+		var obj_cedula_propiet = document.getElementById("pers_propiet_cedula");
+		
+		obj_email.onchange=function(){
+			var email = obj_email.value;
+			//alert(email);
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			var isValidEmail = re.test(email);
+			if (email==""){
+				$("#constructions_edit_pers_email").hide();
+			  //$("#constructions_edit_pers_email").show();
+			  //$("#constructions_edit_pers_email").html("Debe ingresar un Correo Electronico");
+			}
+			else{
+			  if (isValidEmail){
+				$.ajax({
+				  url: pers_email_check,
+				  data: {
+					pers_email : email,
+					propiet_existe : obj_propiet_existe.value,
+					propiet_cedula : obj_cedula_propiet.value,
+					accion : "edit"
+				  },
+				  dataType: "script"
+				});
+				//$("#usuarios_new_pers_email").hide();
+			  }
+			  else{
+				$("#constructions_edit_pers_email").show();
+				$("#constructions_edit_pers_email").html("Correo Electronico no valido");
+			  }
+			}
+		}
+      }
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	/*VALIDACION PARA LA CEDULA DEMANDANTE*/
+	function checkCedulaDemand(update_demandante){
+        var obj_cedula = document.getElementById("pers_demand_cedula");
+		var obj_propietario = document.getElementById("hidden_propietario_id");
+        obj_cedula.maxLength = 10;
+		obj_cedula.onchange=function(){
+			var cedula = obj_cedula.value;
+			var cedulaLength = cedula.length;
+			var sumando = 0;
+			var total=0;
+			var decenaSuperior = 0;
+			var digito10 = cedula[9];
+			var digito10Cal = 0;
+			if (cedulaLength==10){
+			  for(i=0;i<9;i++){
+				sumando=parseInt(cedula[i]);
+				if (i%2==0){
+				  sumando=parseInt(cedula[i]*2);
+				  if (sumando>9)
+					sumando=parseInt(sumando-9);
+				}
+				total=parseInt(total+sumando);
+			  }
+			  decenaSuperior = ((parseInt(total/10)+1)*10);
+			  digito10Cal = (decenaSuperior-total);
+			  $("#constructions_edit_demand_cedula").show();
+			  if ((digito10Cal==10 && digito10==0) || (digito10 == digito10Cal)){
+				$.ajax({
+					  url: update_demandante,
+					  data: {
+						numero_cedula : $(this).val(),
+						propietario : obj_propietario.value
+					  },
+					  dataType: "script"
+					});
+				$('#constructions_edit_demand_cedula').html("El numero de cedula es correcto");
+				document.getElementById('constructions_edit_demand_cedula').style.color="#008000";
+			  }
+			  else{
+				if (digito10Cal==10)
+				  digito10Cal = 0;
+				$("#constructions_edit_demand_cedula").html("El ultimo digito debe ser " + digito10Cal);
+				document.getElementById("constructions_edit_demand_cedula").style.color="#F50E0E";
+			  }
+			}
+			else{
+			  if (cedula==""){
+				$("#constructions_edit_demand_cedula").html("Debe ingresar un Numero de Cedula");
+			  }
+			  else{
+				$("#constructions_edit_demand_cedula").html("El Numero de Cedula debe tener 10 digitos");
+			  }
+			  $("#constructions_edit_demand_cedula").show();
+			  document.getElementById("constructions_edit_demand_cedula").style.color="#F50E0E";
+			}
+
+        }
+      }
+	  
+      /*CAMPOS QUE NO DEBEN ESTAR EN BLANCO*/
+      function checkApellidoDemand(){
+        var obj_apellido = document.getElementById("pers_demand_apellidos");
+        if (obj_apellido.value==""){
+          $("#constructions_edit_demand_apellido").html("Debe ingresar los Apellidos");
+          $("#constructions_edit_demand_apellido").show();
+        }
+        else{
+          $("#constructions_edit_demand_apellido").hide();
+        }
+      }
+
+      function checkNombreDemand(){
+        var obj_nombre = document.getElementById("pers_demand_nombres");
+        if (obj_nombre.value==""){
+          $("#constructions_edit_demand_nombre").html("Debe ingresar los Nombres");
+          $("#constructions_edit_demand_nombre").show();
+        }
+        else{
+          $("#constructions_edit_demand_nombre").hide();
+        }
+      }
+
+      function checkDireccionDemand(){
+        var obj_direccion = document.getElementById("pers_demand_direccion");
+        if (obj_direccion.value==""){
+          $("#constructions_edit_demand_direccion").html("Debe ingresar una Direccion");
+          $("#constructions_edit_demand_direccion").show();
+        }
+        else{
+          $("#constructions_edit_demand_direccion").hide();
+        }
+      }
+	  
+      function checkTelefono2Demand(){
+        var obj_telefono2 = document.getElementById("pers_demand_telefono2");
+        if (obj_telefono2.value==""){
+          $("#constructions_edit_demand_telefono2").html("Debe ingresar un Numero de Celular");
+          $("#constructions_edit_demand_telefono2").show();
+        }
+        else{
+          $("#constructions_edit_demand_telefono2").hide();
+        }
+      }
+	  
+	/*VALIDACION DE EMAIL*/
+      function checkEmailDemand(demand_email_check){
+		var obj_email = document.getElementById("pers_demand_email");
+		//var obj_persona_id = document.getElementById("hidden_persona_id");
+		var obj_demand_existe = document.getElementById("pers_demand_existe");
+		var obj_cedula_demand = document.getElementById("pers_demand_cedula");
+		
+		obj_email.onchange=function(){
+			var email = obj_email.value;
+			//alert(email);
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			var isValidEmail = re.test(email);
+			if (email==""){
+				$("#constructions_edit_demand_email").hide();
+			  //$("#constructions_edit_pers_email").show();
+			  //$("#constructions_edit_pers_email").html("Debe ingresar un Correo Electronico");
+			}
+			else{
+			  if (isValidEmail){
+				$.ajax({
+				  url: demand_email_check,
+				  data: {
+					demand_email : email,
+					demand_existe : obj_demand_existe.value,
+					demand_cedula : obj_cedula_demand.value,
+					accion : "edit"
+				  },
+				  dataType: "script"
+				});
+				//$("#usuarios_new_pers_email").hide();
+			  }
+			  else{
+				$("#constructions_edit_demand_email").show();
+				$("#constructions_edit_demand_email").html("Correo Electronico no valido");
+			  }
+			}
+		}
+      }

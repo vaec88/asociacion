@@ -1,0 +1,9 @@
+<div id="formulario">
+  <div id="form_eliminar_amount">
+  <%= form_tag destroy_amount_path do%>
+    <%= label_tag nil, "Esta seguro que desea eliminar el pago de '#{@mes} - #{@cuota.amo_anio}'"%>
+    <%= hidden_field_tag :id, @cuota.id  %>
+    <%= hidden_field_tag :persona_id, @persona.id  %>
+  <%end%>
+  </div>
+</div>

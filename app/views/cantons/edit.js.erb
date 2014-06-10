@@ -1,0 +1,18 @@
+$('#canton_edit').html('<%= escape_javascript(render :partial =>'cantons/edit')%>');
+$('#canton_edit').dialog({
+  resizable: false,
+  height: 'auto',
+  width: 'auto',
+  title: "Editar",
+  modal: true,
+  buttons: {
+                "Guardar": function()
+                {
+                    $("#form_edit_canton form").submit();
+                },
+                "Cancelar" : function()
+                {
+                    $("#canton_edit").dialog("close");
+                }
+            }
+});

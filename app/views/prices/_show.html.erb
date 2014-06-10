@@ -1,0 +1,10 @@
+<div id="formulario">
+  <%#if @bandera == "blank"%>
+    <%#= label_tag nil, "ATENCION: Faltan datos por ingresar", :class=>"mensaje" %>
+  <%#else%>
+    <%#if @bandera == "exist"%>
+      <%#= label_tag nil, "El nombre ya existe, por favor ingrese otro nombre", :class=>"mensaje"%>
+    <%#end%>
+  <%#end%>
+  <%= label_tag nil, "", :id=>"advertencia_new", :class=>"mensaje"%>
+</div>

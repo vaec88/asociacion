@@ -1,0 +1,44 @@
+<%= stylesheet_link_tag "tablas.css", :media => "screen" %>
+<%= stylesheet_link_tag "reporte.css", :media => "screen" %>
+<%= stylesheet_link_tag "imprimir.css", :media => "print" %>
+<div id="todo">
+  <div id="margenes_hoja">
+    <div id="tabla">
+      <div id="imagen_cabecera">
+        <img <%= image_tag "reportes/encabezado.JPG" %></img>
+      </div>
+      <h1>Demandantes de Inmuebles con Negociacion: <%= @estados_negociacion %></h1>
+
+    <%if @demandantes.exists?%>
+      <table class="bordered">
+        <tr>
+          <th><div class="titulos"><p>Cliente</p></div></th>
+          <th><div class="titulos"><p>Direccion</p></div></th>
+          <th><div class="titulos"><p>Celular</p></div></th>
+          <th><div class="titulos"><p>Email</p></div></th>
+          <th><div class="titulos"><p>Inmueble</p></div></th>
+          <th><div class="titulos"><p>Negociacion</p></div></th>
+        </tr>
+        <%@demandantes.each do |d|%>
+          <tr>
+            <td><%= label_tag nil, "#{d.pers_apellido} #{d.pers_nombre}"%></td>
+            <td><%= label_tag nil, d.pers_direccion %></td>
+            <td><%= label_tag nil, d.pers_telefono2 %></td>
+            <td><%= label_tag nil, d.pers_email %></td>
+            <td><%= label_tag nil, "#{d.constructions.first.inm_ciudadela} - #{d.constructions.first.inm_calle}"%></td>
+            <%if d.constructions.first.inm_estado == "P"%>
+              <%estado_const = "En Proceso"%>
+            <%end%>
+            <%if d.constructions.first.inm_estado == "I"%>
+              <%estado_const = "Finalizado"%>
+            <%end%>
+            <td><%= label_tag nil, "#{estado_const}" %></td>
+          </tr>
+        <%end%>
+      </table>
+    <%else%>
+      <%= label_tag nil, "No existen datos para mostrar" %>
+    <%end%>
+    </div>
+  </div>
+</div>

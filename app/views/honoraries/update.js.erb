@@ -1,0 +1,19 @@
+if ('<%= @bandera%>' == "blank")
+{ $('#advertencia_edit').html('<%= escape_javascript('ATENCION: Faltan datos por ingresar')%>');
+  if ('<%= @hon_fecha%>' == "blank")
+  { document.getElementById("honoraries_edit_hon_fecha").style.border="1px solid #dc143c";
+    document.getElementById("honoraries_edit_hon_fecha").focus();
+  }
+  else
+  { document.getElementById("honoraries_edit_hon_fecha").style.border="1px solid #ddd";}
+  if ('<%= @hon_cantidad%>' == "blank")
+  { document.getElementById("honoraries_edit_hon_cantidad").style.border="1px solid #dc143c";
+    document.getElementById("honoraries_edit_hon_cantidad").focus();
+  }
+  else
+  { document.getElementById("honoraries_edit_hon_cantidad").style.border="1px solid #ddd";}
+}
+
+document.getElementById("advertencia_edit").style.color="#F50E0E";
+$('#advertencia_edit').show();
+setTimeout(function(){$('#advertencia_edit').hide()},6000);
